@@ -3,689 +3,376 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚔️ МАСТЕРСКАЯ ГЕРОЕВ - Полный конструктор персонажей</title>
+    <title>👸 КОНСТРУКТОР ГЕРОИНЬ - Создай свою идеальную чародейку</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            background: linear-gradient(135deg, #1a0b2e 0%, #2d1b3a 100%);
             min-height: 100vh;
             padding: 20px;
         }
         
-        /* Кастомный скроллбар */
-        ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #4a90e2, #9b59b6);
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #5aa0f2, #ab69c6);
-        }
-        
         .container {
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
-            background: rgba(20, 20, 40, 0.7);
-            backdrop-filter: blur(15px);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
             border-radius: 40px;
             padding: 25px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
         }
         
-        /* Красивый заголовок */
-        .header {
+        h1 {
             text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        
-        .header h1 {
-            font-size: 4em;
-            background: linear-gradient(135deg, #fff, #a8b2d1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(74,144,226,0.5);
-            letter-spacing: 4px;
+            font-size: 3.5em;
             margin-bottom: 10px;
-        }
-        
-        .header h1 span {
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            background: linear-gradient(135deg, #ffd7b0, #ff9f9f);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255,200,200,0.5);
         }
         
-        .header .subtitle {
-            color: rgba(255,255,255,0.6);
+        .subtitle {
+            text-align: center;
+            color: #d4b5ff;
+            margin-bottom: 30px;
             font-size: 1.2em;
-            letter-spacing: 2px;
+            font-style: italic;
         }
         
-        /* Выбор пола с анимацией */
         .gender-selector {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-bottom: 40px;
-            perspective: 1000px;
+            gap: 30px;
+            margin-bottom: 30px;
         }
         
         .gender-btn {
-            padding: 20px 60px;
-            font-size: 1.8em;
+            padding: 15px 50px;
+            font-size: 1.5em;
             border: none;
-            border-radius: 60px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.3s;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            position: relative;
-            overflow: hidden;
-            transform-style: preserve-3d;
-        }
-        
-        .gender-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-        
-        .gender-btn:hover::before {
-            left: 100%;
+            color: white;
         }
         
         .gender-btn.female {
-            background: linear-gradient(135deg, #ff6b6b, #ff4757, #ff6b6b);
-            background-size: 200% 200%;
-            color: white;
-            box-shadow: 0 10px 30px rgba(255,71,87,0.4);
+            background: linear-gradient(135deg, #ff6b6b, #ff9f9f);
+            box-shadow: 0 10px 30px rgba(255,107,107,0.5);
         }
         
         .gender-btn.male {
-            background: linear-gradient(135deg, #4a90e2, #3742fa, #4a90e2);
-            background-size: 200% 200%;
-            color: white;
-            box-shadow: 0 10px 30px rgba(55,66,250,0.4);
+            background: linear-gradient(135deg, #6b8cff, #9fb0ff);
+            box-shadow: 0 10px 30px rgba(107,140,255,0.5);
         }
         
         .gender-btn.selected {
-            transform: scale(1.15) translateZ(30px);
-            box-shadow: 0 20px 50px currentColor;
-            animation: pulse 2s infinite;
+            transform: scale(1.1);
+            border: 3px solid white;
         }
         
-        @keyframes pulse {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.2); }
-        }
-        
-        /* Основная сетка */
         .main-area {
             display: grid;
-            grid-template-columns: 350px 1fr 350px;
-            gap: 25px;
-        }
-        
-        @media (max-width: 1400px) {
-            .main-area {
-                grid-template-columns: 300px 1fr 300px;
-            }
+            grid-template-columns: 300px 1fr 300px;
+            gap: 20px;
         }
         
         @media (max-width: 1000px) {
             .main-area {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
         }
         
-        /* Панели */
         .panel {
-            background: rgba(30, 30, 50, 0.7);
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
             border-radius: 30px;
-            padding: 25px;
+            padding: 20px;
             border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            transition: transform 0.3s ease;
-            max-height: 800px;
-            overflow-y: auto;
-        }
-        
-        .panel:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            color: white;
         }
         
         .panel h2 {
-            color: white;
-            margin-bottom: 25px;
-            font-size: 1.8em;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-            padding-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .panel h2 i {
+            color: #ffd7b0;
+            margin-bottom: 20px;
             font-size: 1.5em;
-            background: linear-gradient(135deg, #4a90e2, #9b59b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            border-bottom: 2px solid rgba(255,215,176,0.3);
+            padding-bottom: 10px;
         }
         
-        /* Центральная область */
         .character-display {
-            background: linear-gradient(135deg, #1e1e3f, #2a2a4a);
+            background: linear-gradient(135deg, #2d1b3a, #1e1326);
             border-radius: 40px;
-            padding: 30px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative;
-            border: 2px solid rgba(255,255,255,0.1);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 100px rgba(74,144,226,0.2);
-            min-height: 700px;
+            border: 2px solid rgba(255,215,176,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            min-height: 600px;
         }
         
         .character-canvas {
             width: 100%;
-            height: 550px;
+            height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.6));
         }
         
         .character-svg {
             max-width: 100%;
             max-height: 100%;
-            filter: drop-shadow(0 0 20px rgba(255,255,255,0.3));
+            filter: drop-shadow(0 10px 20px rgba(255,200,200,0.3));
         }
         
         .character-name {
-            font-size: 2.5em;
+            font-size: 2em;
             margin-top: 20px;
-            color: white;
-            text-shadow: 0 0 20px rgba(74,144,226,0.8);
+            color: #ffd7b0;
+            text-shadow: 0 0 20px #ff9f9f;
             background: rgba(0,0,0,0.3);
-            padding: 15px 40px;
-            border-radius: 60px;
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(5px);
-            letter-spacing: 2px;
+            padding: 10px 40px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,215,176,0.3);
         }
         
-        .character-level {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #4a90e2, #9b59b6);
-            padding: 10px 25px;
-            border-radius: 30px;
-            color: white;
-            font-weight: bold;
-            font-size: 1.2em;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        
-        /* Секции опций */
         .option-section {
             margin-bottom: 25px;
         }
         
         .option-section h3 {
-            color: #a8b2d1;
-            margin-bottom: 15px;
-            font-size: 1.2em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: #d4b5ff;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .option-buttons {
             display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .option-section h3 i {
-            color: #4a90e2;
-        }
-        
-        .option-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            flex-wrap: wrap;
             gap: 8px;
         }
         
         .option-btn {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.8);
-            padding: 10px;
-            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: 0.2s;
             font-size: 0.9em;
-            text-align: center;
-            backdrop-filter: blur(5px);
         }
         
         .option-btn:hover {
-            background: rgba(74,144,226,0.3);
-            transform: translateY(-3px);
-            border-color: #4a90e2;
-            box-shadow: 0 5px 15px rgba(74,144,226,0.4);
+            background: rgba(255,215,176,0.3);
+            transform: translateY(-2px);
         }
         
         .option-btn.selected {
-            background: linear-gradient(135deg, #4a90e2, #9b59b6);
-            color: white;
+            background: linear-gradient(135deg, #ff6b6b, #ff9f9f);
             border-color: white;
-            box-shadow: 0 5px 20px rgba(74,144,226,0.6);
         }
         
-        /* Цветовая палитра */
         .color-palette {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             margin-top: 10px;
         }
         
         .color-btn {
-            width: 45px;
-            height: 45px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             border: 2px solid transparent;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+            transition: 0.2s;
         }
         
         .color-btn:hover {
-            transform: scale(1.2) rotate(15deg);
+            transform: scale(1.2);
             border-color: white;
-            box-shadow: 0 10px 20px currentColor;
         }
         
         .color-btn.selected {
             border-color: white;
-            box-shadow: 0 0 30px currentColor;
-            transform: scale(1.1);
+            box-shadow: 0 0 20px currentColor;
         }
         
-        /* Характеристики */
-        .stats-container {
-            background: rgba(0,0,0,0.3);
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 25px;
+        .stats-panel {
+            margin-top: 20px;
         }
         
-        .stat-bar {
-            margin-bottom: 15px;
-        }
-        
-        .stat-header {
+        .stat-row {
             display: flex;
             justify-content: space-between;
-            color: white;
-            margin-bottom: 5px;
-        }
-        
-        .stat-progress {
-            height: 10px;
-            background: rgba(255,255,255,0.1);
+            margin-bottom: 10px;
+            padding: 8px;
+            background: rgba(0,0,0,0.3);
             border-radius: 10px;
-            overflow: hidden;
         }
         
-        .stat-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4a90e2, #9b59b6);
-            border-radius: 10px;
-            transition: width 0.5s ease;
-            position: relative;
-            overflow: hidden;
+        .stat-name {
+            color: #d4b5ff;
         }
         
-        .stat-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shimmer 2s infinite;
+        .stat-value {
+            color: #ffd7b0;
+            font-weight: bold;
         }
         
-        @keyframes shimmer {
-            100% { left: 100%; }
-        }
-        
-        /* Кнопки действий */
         .action-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-top: 25px;
+            margin-top: 20px;
         }
         
         .action-btn {
-            padding: 15px;
+            padding: 12px;
             border: none;
-            border-radius: 15px;
-            background: linear-gradient(135deg, #4a90e2, #357abd);
+            border-radius: 25px;
+            background: linear-gradient(135deg, #6b8cff, #9fb0ff);
             color: white;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .action-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.5s, height 0.5s;
-        }
-        
-        .action-btn:hover::before {
-            width: 300px;
-            height: 300px;
+            transition: 0.3s;
         }
         
         .action-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(74,144,226,0.6);
+            box-shadow: 0 10px 20px rgba(107,140,255,0.4);
         }
         
         .action-btn.secondary {
-            background: linear-gradient(135deg, #ff6b6b, #ff4757);
-        }
-        
-        /* Инвентарь */
-        .inventory-slot {
-            background: rgba(0,0,0,0.3);
-            border: 2px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
-            padding: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .inventory-slot:hover {
-            background: rgba(74,144,226,0.2);
-            border-color: #4a90e2;
-            transform: translateX(5px);
-        }
-        
-        .inventory-slot .icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #4a90e2, #9b59b6);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-        }
-        
-        .inventory-slot .info {
-            flex: 1;
-        }
-        
-        .inventory-slot .name {
-            color: white;
-            font-weight: bold;
-        }
-        
-        .inventory-slot .stats {
-            color: #a8b2d1;
-            font-size: 0.8em;
-        }
-        
-        /* Анимации */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        /* Инструменты */
-        .tools-section {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .tool-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9em;
-        }
-        
-        .tool-btn:hover {
-            background: rgba(74,144,226,0.3);
-            border-color: #4a90e2;
+            background: linear-gradient(135deg, #ff6b6b, #ff9f9f);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>⚔️ <span>МАСТЕРСКАЯ</span> ГЕРОЕВ ⚔️</h1>
-            <div class="subtitle">Создай легенду • Настрой каждую деталь • Прокачай до максимума</div>
-        </div>
+        <h1>👸 КОНСТРУКТОР ГЕРОИНЬ</h1>
+        <div class="subtitle">Создай свою идеальную чародейку, воительницу или правительницу</div>
         
-        <!-- Выбор пола -->
         <div class="gender-selector">
             <button class="gender-btn female selected" id="genderFemale">👸 Женский</button>
             <button class="gender-btn male" id="genderMale">👑 Мужской</button>
         </div>
         
-        <!-- Инструменты -->
-        <div class="tools-section">
-            <button class="tool-btn">📸 Скриншот</button>
-            <button class="tool-btn">💾 Сохранить</button>
-            <button class="tool-btn">📤 Экспорт</button>
-            <button class="tool-btn">📋 В буфер</button>
-            <button class="tool-btn">🎲 Рандом</button>
-            <button class="tool-btn">⭐ Избранное</button>
-        </div>
-        
-        <!-- Основная область -->
         <div class="main-area">
-            <!-- Левая панель - Внешность и раса -->
-            <div class="panel floating">
-                <h2><i>✨</i> Внешность</h2>
+            <!-- Левая панель - Внешность -->
+            <div class="panel">
+                <h2>✨ Внешность</h2>
                 
                 <div class="option-section">
-                    <h3><i>👤</i> Раса</h3>
-                    <div class="option-grid" id="raceButtons"></div>
+                    <h3>Тип героини</h3>
+                    <div class="option-buttons" id="roleButtons">
+                        <button class="option-btn selected" data-role="queen">👑 Правительница</button>
+                        <button class="option-btn" data-role="warrior">⚔️ Воительница</button>
+                        <button class="option-btn" data-role="mage">🔮 Чародейка</button>
+                        <button class="option-btn" data-role="hunter">🏹 Охотница</button>
+                    </div>
                 </div>
                 
                 <div class="option-section">
-                    <h3><i>💇</i> Прическа</h3>
-                    <div class="option-grid" id="hairstyleButtons"></div>
+                    <h3>Прическа</h3>
+                    <div class="option-buttons" id="hairstyleButtons">
+                        <button class="option-btn selected" data-hairstyle="long">Длинные</button>
+                        <button class="option-btn" data-hairstyle="medium">Средние</button>
+                        <button class="option-btn" data-hairstyle="ponytail">Хвост</button>
+                        <button class="option-btn" data-hairstyle="braid">Коса</button>
+                    </div>
                 </div>
                 
                 <div class="option-section">
-                    <h3><i>🎨</i> Цвет волос</h3>
+                    <h3>Цвет волос</h3>
                     <div class="color-palette" id="hairColorPalette"></div>
                 </div>
                 
                 <div class="option-section">
-                    <h3><i>👁️</i> Цвет глаз</h3>
+                    <h3>Цвет глаз</h3>
                     <div class="color-palette" id="eyeColorPalette"></div>
                 </div>
-                
-                <div class="option-section">
-                    <h3><i>⚡</i> Особенности</h3>
-                    <div class="option-grid" id="featuresButtons"></div>
-                </div>
-                
-                <div class="option-section">
-                    <h3><i>🎭</i> Эмоция</h3>
-                    <div class="option-grid" id="emotionButtons"></div>
-                </div>
             </div>
             
-            <!-- Центральная область - Персонаж -->
+            <!-- Центр - Персонаж -->
             <div class="character-display">
-                <div class="character-level" id="levelDisplay">Ур. 10</div>
                 <div class="character-canvas">
-                    <svg class="character-svg" viewBox="0 0 400 600" id="characterSVG">
-                        <!-- Персонаж будет отрисовываться здесь -->
+                    <svg class="character-svg" viewBox="0 0 300 500" id="characterSVG">
+                        <!-- Здесь будет отрисовываться персонаж -->
                     </svg>
                 </div>
-                <div class="character-name" id="characterName">Эльфийка-воин</div>
+                <div class="character-name" id="characterName">Правительница</div>
             </div>
             
-            <!-- Правая панель - Класс и снаряжение -->
+            <!-- Правая панель - Снаряжение -->
             <div class="panel">
-                <h2><i>⚔️</i> Снаряжение</h2>
+                <h2>⚔️ Снаряжение</h2>
                 
                 <div class="option-section">
-                    <h3><i>📚</i> Класс</h3>
-                    <div class="option-grid" id="classButtons"></div>
+                    <h3>Оружие</h3>
+                    <div class="option-buttons" id="weaponButtons">
+                        <button class="option-btn selected" data-weapon="sword">🗡️ Меч</button>
+                        <button class="option-btn" data-weapon="staff">🔮 Посох</button>
+                        <button class="option-btn" data-weapon="bow">🏹 Лук</button>
+                        <button class="option-btn" data-weapon="dagger">🔪 Кинжал</button>
+                    </div>
                 </div>
                 
                 <div class="option-section">
-                    <h3><i>🗡️</i> Оружие</h3>
-                    <div class="option-grid" id="weaponButtons"></div>
+                    <h3>Доспехи</h3>
+                    <div class="option-buttons" id="armorButtons">
+                        <button class="option-btn selected" data-armor="royal">👑 Королевские</button>
+                        <button class="option-btn" data-armor="battle">⚔️ Боевые</button>
+                        <button class="option-btn" data-armor="magic">✨ Магические</button>
+                        <button class="option-btn" data-armor="hunter">🏹 Охотничьи</button>
+                    </div>
                 </div>
                 
                 <div class="option-section">
-                    <h3><i>🛡️</i> Доспехи</h3>
-                    <div class="option-grid" id="armorButtons"></div>
-                </div>
-                
-                <div class="option-section">
-                    <h3><i>👑</i> Аксессуары</h3>
-                    <div class="option-grid" id="accessoryButtons"></div>
-                </div>
-                
-                <div class="option-section">
-                    <h3><i>🔮</i> Магическая аура</h3>
-                    <div class="color-palette" id="auraColorPalette"></div>
+                    <h3>Аксессуары</h3>
+                    <div class="option-buttons" id="accessoryButtons">
+                        <button class="option-btn selected" data-accessory="none">Нет</button>
+                        <button class="option-btn" data-accessory="crown">👑 Корона</button>
+                        <button class="option-btn" data-accessory="cape">🧙 Плащ</button>
+                        <button class="option-btn" data-accessory="jewelry">💎 Украшения</button>
+                    </div>
                 </div>
                 
                 <!-- Характеристики -->
-                <div class="stats-container">
-                    <h3 style="color: white; margin-bottom: 20px;">📊 Характеристики</h3>
-                    
-                    <div class="stat-bar">
-                        <div class="stat-header">
-                            <span>💪 Сила</span>
-                            <span id="statStr">15</span>
-                        </div>
-                        <div class="stat-progress">
-                            <div class="stat-fill" id="statStrBar" style="width: 60%"></div>
-                        </div>
+                <div class="stats-panel">
+                    <h3>📊 Характеристики</h3>
+                    <div class="stat-row">
+                        <span class="stat-name">👑 Власть</span>
+                        <span class="stat-value" id="statPower">15</span>
                     </div>
-                    
-                    <div class="stat-bar">
-                        <div class="stat-header">
-                            <span>🏃 Ловкость</span>
-                            <span id="statDex">12</span>
-                        </div>
-                        <div class="stat-progress">
-                            <div class="stat-fill" id="statDexBar" style="width: 48%"></div>
-                        </div>
+                    <div class="stat-row">
+                        <span class="stat-name">⚔️ Сила</span>
+                        <span class="stat-value" id="statStrength">12</span>
                     </div>
-                    
-                    <div class="stat-bar">
-                        <div class="stat-header">
-                            <span>🧠 Интеллект</span>
-                            <span id="statInt">10</span>
-                        </div>
-                        <div class="stat-progress">
-                            <div class="stat-fill" id="statIntBar" style="width: 40%"></div>
-                        </div>
+                    <div class="stat-row">
+                        <span class="stat-name">🔮 Магия</span>
+                        <span class="stat-value" id="statMagic">10</span>
                     </div>
-                    
-                    <div class="stat-bar">
-                        <div class="stat-header">
-                            <span>✨ Магия</span>
-                            <span id="statMag">18</span>
-                        </div>
-                        <div class="stat-progress">
-                            <div class="stat-fill" id="statMagBar" style="width: 72%"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-bar">
-                        <div class="stat-header">
-                            <span>❤️ Здоровье</span>
-                            <span id="statHp">120/120</span>
-                        </div>
-                        <div class="stat-progress">
-                            <div class="stat-fill" style="width: 100%; background: linear-gradient(90deg, #ff6b6b, #ff4757);"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-bar">
-                        <div class="stat-header">
-                            <span>💙 Мана</span>
-                            <span id="statMp">80/80</span>
-                        </div>
-                        <div class="stat-progress">
-                            <div class="stat-fill" style="width: 100%; background: linear-gradient(90deg, #4a90e2, #3742fa);"></div>
-                        </div>
+                    <div class="stat-row">
+                        <span class="stat-name">🏹 Ловкость</span>
+                        <span class="stat-value" id="statAgility">8</span>
                     </div>
                 </div>
                 
-                <!-- Кнопки действий -->
+                <!-- Кнопки -->
                 <div class="action-buttons">
-                    <button class="action-btn" id="randomizeBtn">🎲 Случайный</button>
+                    <button class="action-btn" id="randomizeBtn">🎲 Случайная</button>
                     <button class="action-btn secondary" id="resetBtn">🔄 Сброс</button>
                 </div>
             </div>
@@ -693,143 +380,406 @@
     </div>
     
     <script>
-        // Расширенное состояние персонажа
+        // Состояние персонажа
         const character = {
             gender: 'female',
-            race: 'elf',
+            role: 'queen',
             hairstyle: 'long',
-            hairColor: '#F4C430',
-            eyeColor: '#4a90e2',
-            features: 'none',
-            emotion: 'neutral',
-            class: 'warrior',
+            hairColor: '#F4C430', // золотистый
+            eyeColor: '#4a90e2', // голубой
             weapon: 'sword',
-            armor: 'plate',
-            accessory: 'none',
-            aura: '#4a90e2',
-            level: 10,
-            experience: 0
+            armor: 'royal',
+            accessory: 'none'
         };
         
-        // База данных с кучей деталей
-        const options = {
-            races: [
-                { id: 'human', name: 'Человек', stats: { str: 10, dex: 10, int: 10, mag: 10 }, desc: 'Универсальная раса' },
-                { id: 'elf', name: 'Эльф', stats: { str: 8, dex: 12, int: 12, mag: 12 }, desc: 'Изящные и мудрые' },
-                { id: 'dwarf', name: 'Дварф', stats: { str: 14, dex: 8, int: 10, mag: 8 }, desc: 'Крепкие и выносливые' },
-                { id: 'orc', name: 'Орк', stats: { str: 16, dex: 8, int: 6, mag: 6 }, desc: 'Сильные воины' },
-                { id: 'demon', name: 'Демон', stats: { str: 14, dex: 10, int: 8, mag: 14 }, desc: 'Повелители тьмы' },
-                { id: 'angel', name: 'Ангел', stats: { str: 10, dex: 12, int: 12, mag: 16 }, desc: 'Небесные создания' }
-            ],
+        // Цвета
+        const hairColors = [
+            '#2C2C2C', // черный
+            '#8B4513', // каштановый
+            '#F4C430', // блонд
+            '#D2691E', // рыжий
+            '#C0C0C0', // седой
+            '#8A2BE2', // фиолетовый
+            '#FF69B4', // розовый
+            '#4169E1'  // синий
+        ];
+        
+        const eyeColors = [
+            '#4a90e2', // голубой
+            '#32CD32', // зеленый
+            '#8B4513', // карий
+            '#9370DB', // фиолетовый
+            '#DC143C', // красный
+            '#FFD700'  // золотой
+        ];
+        
+        // Функция отрисовки персонажа
+        function drawCharacter() {
+            const svg = document.getElementById('characterSVG');
             
-            hairstyles: {
-                female: [
-                    { id: 'long', name: 'Длинные', svg: 'M150,90 Q200,150 250,90' },
-                    { id: 'medium', name: 'Средние', svg: 'M160,90 Q200,130 240,90' },
-                    { id: 'short', name: 'Короткие', svg: 'M170,90 Q200,110 230,90' },
-                    { id: 'ponytail', name: 'Хвост', svg: 'M150,90 L200,160 L250,90' },
-                    { id: 'braid', name: 'Коса', svg: 'M160,90 Q180,120 200,130 Q220,120 240,90' },
-                    { id: 'curly', name: 'Кудри', svg: 'M150,90 Q170,100 190,95 Q210,90 230,95 Q250,100 250,90' }
-                ],
-                male: [
-                    { id: 'short', name: 'Короткие', svg: 'M170,90 L200,110 L230,90' },
-                    { id: 'medium', name: 'Средние', svg: 'M160,90 L200,120 L240,90' },
-                    { id: 'long', name: 'Длинные', svg: 'M150,90 L200,140 L250,90' },
-                    { id: 'bald', name: 'Лысый', svg: '' },
-                    { id: 'beard', name: 'С бородой', svg: 'M180,140 L200,160 L220,140' },
-                    { id: 'mohawk', name: 'Ирокез', svg: 'M180,70 L200,50 L220,70' }
-                ]
-            },
+            // Определяем цвета
+            const skinColor = '#FFDBB5';
+            const hairColor = character.hairColor;
+            const eyeColor = character.eyeColor;
             
-            hairColors: [
-                { name: 'Черный', value: '#2C2C2C' },
-                { name: 'Каштановый', value: '#8B4513' },
-                { name: 'Русый', value: '#D2B48C' },
-                { name: 'Блондин', value: '#F4C430' },
-                { name: 'Рыжий', value: '#D2691E' },
-                { name: 'Седой', value: '#C0C0C0' },
-                { name: 'Фиолетовый', value: '#8A2BE2' },
-                { name: 'Синий', value: '#4169E1' },
-                { name: 'Зеленый', value: '#228B22' },
-                { name: 'Розовый', value: '#FF69B4' },
-                { name: 'Золотой', value: '#FFD700' },
-                { name: 'Серебро', value: '#C0C0C0' }
-            ],
+            // Базовая фигура
+            let svgContent = `
+                <!-- Тени и свечение -->
+                <defs>
+                    <linearGradient id="skinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="${skinColor}"/>
+                        <stop offset="100%" stop-color="#F0C8A0"/>
+                    </linearGradient>
+                    
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <!-- Шея -->
+                <rect x="130" y="140" width="40" height="60" fill="url(#skinGradient)" rx="15"/>
+                
+                <!-- Тело (зависит от доспехов) -->
+                ${getBodyForArmor()}
+                
+                <!-- Голова -->
+                <circle cx="150" cy="120" r="40" fill="url(#skinGradient)" filter="url(#glow)"/>
+            `;
             
-            eyeColors: [
-                { name: 'Голубые', value: '#4a90e2' },
-                { name: 'Зеленые', value: '#32CD32' },
-                { name: 'Карие', value: '#8B4513' },
-                { name: 'Серые', value: '#708090' },
-                { name: 'Фиолетовые', value: '#9370DB' },
-                { name: 'Красные', value: '#DC143C' },
-                { name: 'Золотые', value: '#FFD700' },
-                { name: 'Белые', value: '#FFFFFF' }
-            ],
+            // Волосы
+            svgContent += getHairForStyle();
             
-            features: [
-                { id: 'none', name: 'Нет' },
-                { id: 'scar', name: 'Шрам' },
-                { id: 'tattoo', name: 'Тату' },
-                { id: 'glasses', name: 'Очки' },
-                { id: 'mask', name: 'Маска' },
-                { id: 'eyepatch', name: 'Повязка' },
-                { id: 'horns', name: 'Рога' },
-                { id: 'wings', name: 'Крылья' }
-            ],
+            // Лицо
+            svgContent += `
+                <!-- Глаза -->
+                <circle cx="135" cy="115" r="6" fill="white"/>
+                <circle cx="165" cy="115" r="6" fill="white"/>
+                <circle cx="137" cy="117" r="3" fill="${eyeColor}"/>
+                <circle cx="167" cy="117" r="3" fill="${eyeColor}"/>
+                <circle cx="138" cy="119" r="1.5" fill="black"/>
+                <circle cx="168" cy="119" r="1.5" fill="black"/>
+                
+                <!-- Брови -->
+                <path d="M130,105 L140,100" stroke="black" stroke-width="2" fill="none"/>
+                <path d="M170,105 L160,100" stroke="black" stroke-width="2" fill="none"/>
+                
+                <!-- Рот -->
+                <path d="M145,130 Q150,135 155,130" stroke="black" stroke-width="2" fill="none"/>
+            `;
             
-            emotions: [
-                { id: 'neutral', name: 'Нейтральное' },
-                { id: 'happy', name: 'Счастливое' },
-                { id: 'sad', name: 'Грустное' },
-                { id: 'angry', name: 'Злое' },
-                { id: 'surprised', name: 'Удивленное' },
-                { id: 'scared', name: 'Испуганное' }
-            ],
+            // Оружие
+            svgContent += getWeaponForType();
             
-            classes: [
-                { id: 'warrior', name: 'Воин', stats: { str: 15, dex: 10, int: 5, mag: 5 } },
-                { id: 'rogue', name: 'Разбойник', stats: { str: 8, dex: 15, int: 10, mag: 5 } },
-                { id: 'mage', name: 'Маг', stats: { str: 5, dex: 8, int: 15, mag: 15 } },
-                { id: 'paladin', name: 'Паладин', stats: { str: 12, dex: 8, int: 10, mag: 10 } },
-                { id: 'hunter', name: 'Охотник', stats: { str: 10, dex: 13, int: 8, mag: 5 } },
-                { id: 'necromancer', name: 'Некромант', stats: { str: 6, dex: 8, int: 14, mag: 16 } },
-                { id: 'druid', name: 'Друид', stats: { str: 8, dex: 8, int: 12, mag: 14 } },
-                { id: 'bard', name: 'Бард', stats: { str: 6, dex: 12, int: 12, mag: 10 } }
-            ],
+            // Аксессуары
+            svgContent += getAccessoryForType();
             
-            weapons: [
-                { id: 'sword', name: 'Меч', stats: { str: 3, dex: 1 } },
-                { id: 'axe', name: 'Топор', stats: { str: 4, dex: -1 } },
-                { id: 'bow', name: 'Лук', stats: { dex: 3 } },
-                { id: 'staff', name: 'Посох', stats: { int: 2, mag: 2 } },
-                { id: 'dagger', name: 'Кинжал', stats: { dex: 2, str: 1 } },
-                { id: 'spear', name: 'Копье', stats: { str: 2, dex: 2 } },
-                { id: 'hammer', name: 'Молот', stats: { str: 4, dex: -2 } },
-                { id: 'wand', name: 'Волшебная палочка', stats: { mag: 3 } }
-            ],
+            svg.innerHTML = svgContent;
+        }
+        
+        // Функция для тела
+        function getBodyForArmor() {
+            switch(character.armor) {
+                case 'royal':
+                    return `<rect x="120" y="190" width="60" height="180" fill="#8B4513" rx="20"/>
+                            <rect x="125" y="195" width="50" height="170" fill="#D4AF37" rx="15"/>
+                            <path d="M120,190 L180,190 L170,210 L130,210 Z" fill="#D4AF37"/>`;
+                case 'battle':
+                    return `<rect x="120" y="190" width="60" height="180" fill="#C0C0C0" rx="10"/>
+                            <rect x="125" y="195" width="50" height="170" fill="#A9A9A9" rx="8"/>
+                            <circle cx="150" cy="220" r="15" fill="#CD7F32"/>`;
+                case 'magic':
+                    return `<rect x="120" y="190" width="60" height="180" fill="#4B0082" rx="20"/>
+                            <rect x="125" y="195" width="50" height="170" fill="#6A0DAD" rx="15"/>
+                            <circle cx="150" cy="250" r="20" fill="none" stroke="#FFD700" stroke-width="2"/>`;
+                case 'hunter':
+                    return `<rect x="120" y="190" width="60" height="180" fill="#228B22" rx="10"/>
+                            <rect x="125" y="195" width="50" height="170" fill="#2E8B57" rx="8"/>
+                            <path d="M130,250 L150,240 L170,250" stroke="#8B4513" stroke-width="3" fill="none"/>`;
+                default:
+                    return `<rect x="120" y="190" width="60" height="180" fill="#4a4a4a" rx="20"/>`;
+            }
+        }
+        
+        // Функция для волос
+        function getHairForStyle() {
+            switch(character.hairstyle) {
+                case 'long':
+                    return `<path d="M115,90 Q150,150 185,90" fill="${character.hairColor}" opacity="0.9"/>
+                            <path d="M120,110 L150,200 L180,110" fill="${character.hairColor}" opacity="0.7"/>`;
+                case 'medium':
+                    return `<path d="M120,95 Q150,130 180,95" fill="${character.hairColor}"/>`;
+                case 'ponytail':
+                    return `<path d="M125,90 Q150,120 175,90" fill="${character.hairColor}"/>
+                            <circle cx="150" cy="140" r="20" fill="${character.hairColor}"/>`;
+                case 'braid':
+                    return `<path d="M120,90 Q140,100 160,100 Q180,100 180,90" fill="${character.hairColor}"/>
+                            <path d="M140,100 L145,150 L155,150 L160,100" fill="${character.hairColor}"/>`;
+                default:
+                    return `<path d="M125,95 Q150,110 175,95" fill="${character.hairColor}"/>`;
+            }
+        }
+        
+        // Функция для оружия
+        function getWeaponForType() {
+            switch(character.weapon) {
+                case 'sword':
+                    return `<rect x="200" y="200" width="8" height="100" fill="#C0C0C0"/>
+                            <rect x="195" y="180" width="18" height="30" fill="#FFD700"/>`;
+                case 'staff':
+                    return `<rect x="200" y="150" width="6" height="140" fill="#8B4513"/>
+                            <circle cx="203" cy="140" r="15" fill="${character.eyeColor}" opacity="0.7"/>`;
+                case 'bow':
+                    return `<path d="M200,200 Q220,250 200,300" stroke="#8B4513" stroke-width="5" fill="none"/>
+                            <line x1="190" y1="240" x2="210" y2="260" stroke="#8B4513" stroke-width="3"/>`;
+                case 'dagger':
+                    return `<rect x="200" y="220" width="5" height="70" fill="#C0C0C0"/>
+                            <polygon points="195,210 205,210 200,190" fill="#C0C0C0"/>`;
+                default:
+                    return '';
+            }
+        }
+        
+        // Функция для аксессуаров
+        function getAccessoryForType() {
+            switch(character.accessory) {
+                case 'crown':
+                    return `<path d="M130,70 L150,40 L170,70" stroke="#FFD700" stroke-width="4" fill="none"/>
+                            <circle cx="150" cy="45" r="5" fill="#FFD700"/>`;
+                case 'cape':
+                    return `<path d="M100,200 Q80,300 100,400" fill="#8B0000" opacity="0.6"/>`;
+                case 'jewelry':
+                    return `<circle cx="150" cy="100" r="5" fill="#FFD700"/>
+                            <circle cx="150" cy="260" r="8" fill="#FFD700"/>`;
+                default:
+                    return '';
+            }
+        }
+        
+        // Обновление характеристик
+        function updateStats() {
+            let power = 10, strength = 10, magic = 10, agility = 10;
             
-            armors: [
-                { id: 'cloth', name: 'Ткань', stats: { int: 2, mag: 2 } },
-                { id: 'leather', name: 'Кожа', stats: { dex: 2, str: 1 } },
-                { id: 'chain', name: 'Кольчуга', stats: { str: 2, dex: 1 } },
-                { id: 'plate', name: 'Латы', stats: { str: 3, dex: -1 } },
-                { id: 'robe', name: 'Мантия', stats: { mag: 3, int: 2 } },
-                { id: 'dragon', name: 'Драконья чешуя', stats: { all: 2 } }
-            ],
+            // Бонусы от роли
+            switch(character.role) {
+                case 'queen':
+                    power = 15; strength = 8; magic = 10; agility = 7;
+                    break;
+                case 'warrior':
+                    power = 8; strength = 15; magic = 5; agility = 12;
+                    break;
+                case 'mage':
+                    power = 7; strength = 5; magic = 15; agility = 8;
+                    break;
+                case 'hunter':
+                    power = 6; strength = 10; magic = 8; agility = 15;
+                    break;
+            }
             
-            accessories: [
-                { id: 'none', name: 'Нет', stats: {} },
-                { id: 'necklace', name: 'Кулон', stats: { mag: 1, int: 1 } },
-                { id: 'ring', name: 'Кольцо', stats: { all: 1 } },
-                { id: 'cape', name: 'Плащ', stats: { dex: 1, str: 1 } },
-                { id: 'crown', name: 'Корона', stats: { all: 2 } },
-                { id: 'earring', name: 'Серьга', stats: { cha: 2 } },
-                { id: 'belt', name: 'Пояс', stats: { str: 1 } },
-                { id: 'gloves', name: 'Перчатки', stats: { dex: 1 } }
-            ],
+            // Бонусы от оружия
+            switch(character.weapon) {
+                case 'sword': strength += 3; break;
+                case 'staff': magic += 3; break;
+                case 'bow': agility += 3; break;
+                case 'dagger': agility += 2; strength += 1; break;
+            }
             
-            auraColors: [
-                { name: 'Синяя', value: '#4a90e2' },
-                { name: 'Красная', value: '#ff4757' },
-                {
+            // Бонусы от доспехов
+            switch(character.armor) {
+                case 'royal': power += 3; break;
+                case 'battle': strength += 3; break;
+                case 'magic': magic += 3; break;
+                case 'hunter': agility += 3; break;
+            }
+            
+            // Бонусы от аксессуаров
+            switch(character.accessory) {
+                case 'crown': power += 2; magic += 2; break;
+                case 'cape': agility += 2; strength += 2; break;
+                case 'jewelry': magic += 3; power += 1; break;
+            }
+            
+            document.getElementById('statPower').textContent = power;
+            document.getElementById('statStrength').textContent = strength;
+            document.getElementById('statMagic').textContent = magic;
+            document.getElementById('statAgility').textContent = agility;
+        }
+        
+        // Обновление имени
+        function updateName() {
+            const names = {
+                queen: 'Правительница',
+                warrior: 'Воительница',
+                mage: 'Чародейка',
+                hunter: 'Охотница'
+            };
+            document.getElementById('characterName').textContent = names[character.role];
+        }
+        
+        // Обновление всего UI
+        function updateUI() {
+            drawCharacter();
+            updateStats();
+            updateName();
+        }
+        
+        // Инициализация цветовых палитр
+        function initColorPalettes() {
+            const hairPalette = document.getElementById('hairColorPalette');
+            const eyePalette = document.getElementById('eyeColorPalette');
+            
+            hairColors.forEach(color => {
+                const btn = document.createElement('button');
+                btn.className = `color-btn ${character.hairColor === color ? 'selected' : ''}`;
+                btn.style.backgroundColor = color;
+                btn.onclick = () => {
+                    document.querySelectorAll('#hairColorPalette .color-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.hairColor = color;
+                    updateUI();
+                };
+                hairPalette.appendChild(btn);
+            });
+            
+            eyeColors.forEach(color => {
+                const btn = document.createElement('button');
+                btn.className = `color-btn ${character.eyeColor === color ? 'selected' : ''}`;
+                btn.style.backgroundColor = color;
+                btn.onclick = () => {
+                    document.querySelectorAll('#eyeColorPalette .color-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.eyeColor = color;
+                    updateUI();
+                };
+                eyePalette.appendChild(btn);
+            });
+        }
+        
+        // Настройка обработчиков кнопок
+        function setupButtons() {
+            // Роли
+            document.querySelectorAll('[data-role]').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('[data-role]').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.role = btn.dataset.role;
+                    updateUI();
+                };
+            });
+            
+            // Прически
+            document.querySelectorAll('[data-hairstyle]').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('[data-hairstyle]').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.hairstyle = btn.dataset.hairstyle;
+                    updateUI();
+                };
+            });
+            
+            // Оружие
+            document.querySelectorAll('[data-weapon]').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('[data-weapon]').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.weapon = btn.dataset.weapon;
+                    updateUI();
+                };
+            });
+            
+            // Доспехи
+            document.querySelectorAll('[data-armor]').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('[data-armor]').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.armor = btn.dataset.armor;
+                    updateUI();
+                };
+            });
+            
+            // Аксессуары
+            document.querySelectorAll('[data-accessory]').forEach(btn => {
+                btn.onclick = () => {
+                    document.querySelectorAll('[data-accessory]').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.accessory = btn.dataset.accessory;
+                    updateUI();
+                };
+            });
+            
+            // Пол
+            document.getElementById('genderFemale').onclick = () => {
+                document.getElementById('genderFemale').classList.add('selected');
+                document.getElementById('genderMale').classList.remove('selected');
+                character.gender = 'female';
+                updateUI();
+            };
+            
+            document.getElementById('genderMale').onclick = () => {
+                document.getElementById('genderMale').classList.add('selected');
+                document.getElementById('genderFemale').classList.remove('selected');
+                character.gender = 'male';
+                updateUI();
+            };
+            
+            // Случайный персонаж
+            document.getElementById('randomizeBtn').onclick = () => {
+                const roles = ['queen', 'warrior', 'mage', 'hunter'];
+                const hairstyles = ['long', 'medium', 'ponytail', 'braid'];
+                const weapons = ['sword', 'staff', 'bow', 'dagger'];
+                const armors = ['royal', 'battle', 'magic', 'hunter'];
+                const accessories = ['none', 'crown', 'cape', 'jewelry'];
+                
+                character.role = roles[Math.floor(Math.random() * roles.length)];
+                character.hairstyle = hairstyles[Math.floor(Math.random() * hairstyles.length)];
+                character.hairColor = hairColors[Math.floor(Math.random() * hairColors.length)];
+                character.eyeColor = eyeColors[Math.floor(Math.random() * eyeColors.length)];
+                character.weapon = weapons[Math.floor(Math.random() * weapons.length)];
+                character.armor = armors[Math.floor(Math.random() * armors.length)];
+                character.accessory = accessories[Math.floor(Math.random() * accessories.length)];
+                
+                // Обновляем выделение кнопок
+                document.querySelectorAll('.option-btn, .color-btn').forEach(b => b.classList.remove('selected'));
+                
+                // Находим и выделяем нужные кнопки
+                document.querySelector(`[data-role="${character.role}"]`)?.classList.add('selected');
+                document.querySelector(`[data-hairstyle="${character.hairstyle}"]`)?.classList.add('selected');
+                document.querySelector(`[data-weapon="${character.weapon}"]`)?.classList.add('selected');
+                document.querySelector(`[data-armor="${character.armor}"]`)?.classList.add('selected');
+                document.querySelector(`[data-accessory="${character.accessory}"]`)?.classList.add('selected');
+                
+                updateUI();
+            };
+            
+            // Сброс
+            document.getElementById('resetBtn').onclick = () => {
+                character.role = 'queen';
+                character.hairstyle = 'long';
+                character.hairColor = '#F4C430';
+                character.eyeColor = '#4a90e2';
+                character.weapon = 'sword';
+                character.armor = 'royal';
+                character.accessory = 'none';
+                
+                document.querySelectorAll('.option-btn, .color-btn').forEach(b => b.classList.remove('selected'));
+                
+                document.querySelector('[data-role="queen"]').classList.add('selected');
+                document.querySelector('[data-hairstyle="long"]').classList.add('selected');
+                document.querySelector('[data-weapon="sword"]').classList.add('selected');
+                document.querySelector('[data-armor="royal"]').classList.add('selected');
+                document.querySelector('[data-accessory="none"]').classList.add('selected');
+                
+                updateUI();
+            };
+        }
+        
+        // Запуск
+        initColorPalettes();
+        setupButtons();
+        updateUI();
+    </script>
+</body>
+</html>
