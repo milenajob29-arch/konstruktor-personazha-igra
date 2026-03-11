@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ BLESS - Конструктор чиби-персонажей ✨</title>
+    <title>✨ BLESS - Конструктор чиби-героинь ✨</title>
     <style>
         * {
             margin: 0;
@@ -143,120 +143,90 @@
         }
         
         .character-svg {
-            max-width: 100%;
-            max-height: 100%;
+            width: 100%;
+            height: 100%;
+            max-width: 300px;
         }
         
         .character-name {
-            font-size: 2.5em;
+            font-size: 2em;
             margin-top: 20px;
             color: #ff69b4;
             text-shadow: 3px 3px 0 white;
             background: white;
-            padding: 10px 40px;
+            padding: 10px 30px;
             border-radius: 60px;
             border: 4px solid #ffb5c0;
             font-weight: bold;
         }
         
         .option-section {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         .option-section h3 {
             color: #ff69b4;
             margin-bottom: 10px;
-            font-size: 1.3em;
+            font-size: 1.2em;
             text-shadow: 1px 1px 0 white;
         }
         
         .option-buttons {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
         }
         
         .option-btn {
             background: white;
             border: 3px solid #ffb5c0;
             color: #ff69b4;
-            padding: 8px 15px;
+            padding: 6px 12px;
             border-radius: 30px;
             cursor: pointer;
             transition: 0.2s;
-            font-size: 1em;
+            font-size: 0.9em;
             font-weight: bold;
-            box-shadow: 0 5px 0 #ffb5c0;
+            box-shadow: 0 3px 0 #ffb5c0;
         }
         
         .option-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 0 #ff69b4;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 0 #ff69b4;
         }
         
         .option-btn.selected {
             background: #ff69b4;
             border-color: white;
             color: white;
-            box-shadow: 0 5px 0 #ff3388;
+            box-shadow: 0 3px 0 #ff3388;
         }
         
         .color-palette {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 6px;
+            margin-top: 5px;
         }
         
         .color-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 20px;
-            border: 4px solid white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 3px solid white;
             cursor: pointer;
             transition: 0.2s;
-            box-shadow: 0 5px 0 rgba(0,0,0,0.1);
+            box-shadow: 0 3px 0 rgba(0,0,0,0.1);
         }
         
         .color-btn:hover {
-            transform: scale(1.2) rotate(5deg);
+            transform: scale(1.1);
         }
         
         .color-btn.selected {
             border-color: #ff69b4;
             transform: scale(1.1);
-        }
-        
-        .stats-panel {
-            background: white;
-            border-radius: 30px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 4px solid #ffb5c0;
-        }
-        
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding: 8px 15px;
-            background: #fff0f5;
-            border-radius: 30px;
-            border: 2px solid #ffb5c0;
-        }
-        
-        .stat-name {
-            color: #ff69b4;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-        
-        .stat-value {
-            color: white;
-            background: #ff69b4;
-            padding: 2px 15px;
-            border-radius: 30px;
-            font-weight: bold;
+            box-shadow: 0 0 10px #ff69b4;
         }
         
         .action-buttons {
@@ -267,35 +237,27 @@
         }
         
         .action-btn {
-            padding: 15px;
+            padding: 12px;
             border: none;
             border-radius: 40px;
             background: #ff85b3;
             color: white;
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 1.1em;
             cursor: pointer;
             transition: 0.2s;
-            border: 4px solid white;
-            box-shadow: 0 8px 0 #ff3388;
+            border: 3px solid white;
+            box-shadow: 0 5px 0 #ff3388;
         }
         
         .action-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 13px 0 #ff3388;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 #ff3388;
         }
         
         .action-btn.secondary {
             background: #b5c0ff;
-            box-shadow: 0 8px 0 #8590cc;
-        }
-        
-        /* Чиби-стикеры */
-        .sticker {
-            position: absolute;
-            font-size: 2em;
-            opacity: 0.3;
-            pointer-events: none;
+            box-shadow: 0 5px 0 #8590cc;
         }
     </style>
 </head>
@@ -303,7 +265,7 @@
     <div class="container">
         <div class="header">
             <h1>BLESS <span>✨</span></h1>
-            <div class="subtitle">милые чиби-героини твоей мечты</div>
+            <div class="subtitle">милые чиби-героини</div>
         </div>
         
         <div class="gender-selector">
@@ -318,24 +280,12 @@
                 
                 <div class="option-section">
                     <h3>Тип героини</h3>
-                    <div class="option-buttons" id="roleButtons">
-                        <button class="option-btn selected" data-role="princess">👑 Принцесса</button>
-                        <button class="option-btn" data-role="mage">✨ Чародейка</button>
-                        <button class="option-btn" data-role="warrior">⚔️ Воин</button>
-                        <button class="option-btn" data-role="hunter">🏹 Лучница</button>
-                        <button class="option-btn" data-role="angel">😇 Ангел</button>
-                    </div>
+                    <div class="option-buttons" id="roleButtons"></div>
                 </div>
                 
                 <div class="option-section">
                     <h3>Прическа</h3>
-                    <div class="option-buttons" id="hairstyleButtons">
-                        <button class="option-btn selected" data-hairstyle="long">Длинные</button>
-                        <button class="option-btn" data-hairstyle="twintails">Хвостики</button>
-                        <button class="option-btn" data-hairstyle="short">Короткие</button>
-                        <button class="option-btn" data-hairstyle="braid">Коса</button>
-                        <button class="option-btn" data-hairstyle="bob">Каре</button>
-                    </div>
+                    <div class="option-buttons" id="hairstyleButtons"></div>
                 </div>
                 
                 <div class="option-section">
@@ -349,22 +299,15 @@
                 </div>
                 
                 <div class="option-section">
-                    <h3>Выражение лица</h3>
-                    <div class="option-buttons" id="faceButtons">
-                        <button class="option-btn selected" data-face="happy">😊 Улыбка</button>
-                        <button class="option-btn" data-face="wink">😉 Подмигивание</button>
-                        <button class="option-btn" data-face="heart">😍 Сердечки</button>
-                        <button class="option-btn" data-face="star">✨ Звездочки</button>
-                    </div>
+                    <h3>Выражение</h3>
+                    <div class="option-buttons" id="faceButtons"></div>
                 </div>
             </div>
             
             <!-- Центр - Персонаж -->
             <div class="character-display">
                 <div class="character-canvas">
-                    <svg class="character-svg" viewBox="0 0 300 450" id="characterSVG">
-                        <!-- Чиби-персонаж будет здесь -->
-                    </svg>
+                    <svg class="character-svg" viewBox="0 0 300 450" id="characterSVG"></svg>
                 </div>
                 <div class="character-name" id="characterName">✨ Принцесса ✨</div>
             </div>
@@ -374,67 +317,23 @@
                 <h2>⭐ Снаряжение</h2>
                 
                 <div class="option-section">
-                    <h3>Оружие/Аксессуар</h3>
-                    <div class="option-buttons" id="weaponButtons">
-                        <button class="option-btn selected" data-weapon="wand">✨ Волшебная палочка</button>
-                        <button class="option-btn" data-weapon="staff">🔮 Посох</button>
-                        <button class="option-btn" data-weapon="bow">🏹 Лук</button>
-                        <button class="option-btn" data-weapon="sword">⚔️ Меч</button>
-                        <button class="option-btn" data-weapon="heart">💖 Сердечко</button>
-                    </div>
+                    <h3>Оружие</h3>
+                    <div class="option-buttons" id="weaponButtons"></div>
                 </div>
                 
                 <div class="option-section">
                     <h3>Наряд</h3>
-                    <div class="option-buttons" id="outfitButtons">
-                        <button class="option-btn selected" data-outfit="princess">👗 Платье</button>
-                        <button class="option-btn" data-outfit="magic">✨ Магическое</button>
-                        <button class="option-btn" data-outfit="armor">🛡️ Доспехи</button>
-                        <button class="option-btn" data-outfit="santa">🎄 Праздничное</button>
-                    </div>
+                    <div class="option-buttons" id="outfitButtons"></div>
                 </div>
                 
                 <div class="option-section">
                     <h3>Головной убор</h3>
-                    <div class="option-buttons" id="hatButtons">
-                        <button class="option-btn selected" data-hat="none">🚫 Нет</button>
-                        <button class="option-btn" data-hat="crown">👑 Корона</button>
-                        <button class="option-btn" data-hat="ribbon">🎀 Бантик</button>
-                        <button class="option-btn" data-hat="witchhat">🧙 Шляпа</button>
-                        <button class="option-btn" data-hat="flowers">🌸 Цветы</button>
-                    </div>
+                    <div class="option-buttons" id="hatButtons"></div>
                 </div>
                 
                 <div class="option-section">
                     <h3>Эффекты</h3>
-                    <div class="option-buttons" id="effectButtons">
-                        <button class="option-btn selected" data-effect="none">Нет</button>
-                        <button class="option-btn" data-effect="sparkles">✨ Блестки</button>
-                        <button class="option-btn" data-effect="hearts">💖 Сердечки</button>
-                        <button class="option-btn" data-effect="stars">⭐ Звезды</button>
-                        <button class="option-btn" data-effect="flowers">🌸 Цветочки</button>
-                    </div>
-                </div>
-                
-                <!-- Характеристики (в милом стиле) -->
-                <div class="stats-panel">
-                    <h3 style="color: #ff69b4; margin-bottom: 10px;">🌟 Характеристики</h3>
-                    <div class="stat-row">
-                        <span class="stat-name">✨ Милота</span>
-                        <span class="stat-value" id="statCute">100</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-name">💖 Магия</span>
-                        <span class="stat-value" id="statMagic">95</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-name">⭐ Сила</span>
-                        <span class="stat-value" id="statPower">90</span>
-                    </div>
-                    <div class="stat-row">
-                        <span class="stat-name">🎀 Стиль</span>
-                        <span class="stat-value" id="statStyle">100</span>
-                    </div>
+                    <div class="option-buttons" id="effectButtons"></div>
                 </div>
                 
                 <!-- Кнопки -->
@@ -448,12 +347,12 @@
     
     <script>
         // Состояние персонажа
-        const character = {
+        let character = {
             gender: 'female',
             role: 'princess',
             hairstyle: 'long',
-            hairColor: '#F4C430', // золотистый
-            eyeColor: '#4a90e2', // голубой
+            hairColor: '#F4C430',
+            eyeColor: '#4a90e2',
             face: 'happy',
             weapon: 'wand',
             outfit: 'princess',
@@ -461,18 +360,66 @@
             effect: 'none'
         };
         
+        // Данные для кнопок
+        const buttonsData = {
+            roles: [
+                { id: 'princess', name: '👑 Принцесса' },
+                { id: 'mage', name: '✨ Чародейка' },
+                { id: 'warrior', name: '⚔️ Воин' },
+                { id: 'hunter', name: '🏹 Лучница' },
+                { id: 'angel', name: '😇 Ангел' }
+            ],
+            hairstyles: [
+                { id: 'long', name: 'Длинные' },
+                { id: 'twintails', name: 'Хвостики' },
+                { id: 'short', name: 'Короткие' },
+                { id: 'braid', name: 'Коса' },
+                { id: 'bob', name: 'Каре' }
+            ],
+            faces: [
+                { id: 'happy', name: '😊 Улыбка' },
+                { id: 'wink', name: '😉 Подмиг' },
+                { id: 'heart', name: '😍 Сердечки' },
+                { id: 'star', name: '✨ Звезды' }
+            ],
+            weapons: [
+                { id: 'wand', name: '✨ Палочка' },
+                { id: 'staff', name: '🔮 Посох' },
+                { id: 'bow', name: '🏹 Лук' },
+                { id: 'sword', name: '⚔️ Меч' },
+                { id: 'heart', name: '💖 Сердечко' }
+            ],
+            outfits: [
+                { id: 'princess', name: '👗 Платье' },
+                { id: 'magic', name: '✨ Магическое' },
+                { id: 'armor', name: '🛡️ Доспехи' }
+            ],
+            hats: [
+                { id: 'none', name: '🚫 Нет' },
+                { id: 'crown', name: '👑 Корона' },
+                { id: 'ribbon', name: '🎀 Бантик' },
+                { id: 'witchhat', name: '🧙 Шляпа' },
+                { id: 'flowers', name: '🌸 Цветы' }
+            ],
+            effects: [
+                { id: 'none', name: 'Нет' },
+                { id: 'sparkles', name: '✨ Блестки' },
+                { id: 'hearts', name: '💖 Сердечки' },
+                { id: 'stars', name: '⭐ Звезды' },
+                { id: 'flowers', name: '🌸 Цветы' }
+            ]
+        };
+        
         // Цвета
         const hairColors = [
-            '#F4C430', // золотистый
-            '#8B4513', // каштановый
+            '#F4C430', // золотой
+            '#8B4513', // каштан
             '#2C2C2C', // черный
             '#D2691E', // рыжий
             '#FF69B4', // розовый
             '#9370DB', // фиолетовый
             '#4169E1', // синий
-            '#C0C0C0', // серебро
-            '#FFD700', // золото
-            '#98FB98'  // мятный
+            '#C0C0C0'  // серебро
         ];
         
         const eyeColors = [
@@ -481,101 +428,215 @@
             '#8B4513', // карий
             '#9370DB', // фиолетовый
             '#FF69B4', // розовый
-            '#FFD700', // золотой
-            '#DC143C'  // красный
+            '#FFD700'  // золотой
         ];
         
-        // Функция отрисовки чиби-персонажа
+        // Создание кнопок
+        function createButtons() {
+            // Роли
+            const roleContainer = document.getElementById('roleButtons');
+            buttonsData.roles.forEach(role => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.role === role.id ? 'selected' : ''}`;
+                btn.setAttribute('data-role', role.id);
+                btn.textContent = role.name;
+                btn.onclick = () => {
+                    document.querySelectorAll('[data-role]').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.role = role.id;
+                    updateCharacter();
+                };
+                roleContainer.appendChild(btn);
+            });
+            
+            // Прически
+            const hairContainer = document.getElementById('hairstyleButtons');
+            buttonsData.hairstyles.forEach(style => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.hairstyle === style.id ? 'selected' : ''}`;
+                btn.setAttribute('data-hairstyle', style.id);
+                btn.textContent = style.name;
+                btn.onclick = () => {
+                    document.querySelectorAll('[data-hairstyle]').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.hairstyle = style.id;
+                    updateCharacter();
+                };
+                hairContainer.appendChild(btn);
+            });
+            
+            // Выражения лица
+            const faceContainer = document.getElementById('faceButtons');
+            buttonsData.faces.forEach(face => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.face === face.id ? 'selected' : ''}`;
+                btn.setAttribute('data-face', face.id);
+                btn.textContent = face.name;
+                btn.onclick = () => {
+                    document.querySelectorAll('[data-face]').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.face = face.id;
+                    updateCharacter();
+                };
+                faceContainer.appendChild(btn);
+            });
+            
+            // Оружие
+            const weaponContainer = document.getElementById('weaponButtons');
+            buttonsData.weapons.forEach(weapon => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.weapon === weapon.id ? 'selected' : ''}`;
+                btn.setAttribute('data-weapon', weapon.id);
+                btn.textContent = weapon.name;
+                btn.onclick = () => {
+                    document.querySelectorAll('[data-weapon]').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.weapon = weapon.id;
+                    updateCharacter();
+                };
+                weaponContainer.appendChild(btn);
+            });
+            
+            // Наряды
+            const outfitContainer = document.getElementById('outfitButtons');
+            buttonsData.outfits.forEach(outfit => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.outfit === outfit.id ? 'selected' : ''}`;
+                btn.setAttribute('data-outfit', outfit.id);
+                btn.textContent = outfit.name;
+                btn.onclick = () => {
+                    document.querySelectorAll('[data-outfit]').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.outfit = outfit.id;
+                    updateCharacter();
+                };
+                outfitContainer.appendChild(btn);
+            });
+            
+            // Головные уборы
+            const hatContainer = document.getElementById('hatButtons');
+            buttonsData.hats.forEach(hat => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.hat === hat.id ? 'selected' : ''}`;
+                btn.setAttribute('data-hat', hat.id);
+                btn.textContent = hat.name;
+                btn.onclick = () => {
+                    document.querySelectorAll('[data-hat]').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.hat = hat.id;
+                    updateCharacter();
+                };
+                hatContainer.appendChild(btn);
+            });
+            
+            // Эффекты
+            const effectContainer = document.getElementById('effectButtons');
+            buttonsData.effects.forEach(effect => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.effect === effect.id ? 'selected' : ''}`;
+                btn.setAttribute('data-effect', effect.id);
+                btn.textContent = effect.name;
+                btn.onclick = () => {
+                    document.querySelectorAll('[data-effect]').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.effect = effect.id;
+                    updateCharacter();
+                };
+                effectContainer.appendChild(btn);
+            });
+        }
+        
+        // Создание цветовых палитр
+        function createColorPalettes() {
+            const hairPalette = document.getElementById('hairColorPalette');
+            const eyePalette = document.getElementById('eyeColorPalette');
+            
+            hairColors.forEach(color => {
+                const btn = document.createElement('button');
+                btn.className = `color-btn ${character.hairColor === color ? 'selected' : ''}`;
+                btn.style.backgroundColor = color;
+                btn.onclick = () => {
+                    document.querySelectorAll('#hairColorPalette .color-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.hairColor = color;
+                    updateCharacter();
+                };
+                hairPalette.appendChild(btn);
+            });
+            
+            eyeColors.forEach(color => {
+                const btn = document.createElement('button');
+                btn.className = `color-btn ${character.eyeColor === color ? 'selected' : ''}`;
+                btn.style.backgroundColor = color;
+                btn.onclick = () => {
+                    document.querySelectorAll('#eyeColorPalette .color-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    character.eyeColor = color;
+                    updateCharacter();
+                };
+                eyePalette.appendChild(btn);
+            });
+        }
+        
+        // Отрисовка персонажа
         function drawCharacter() {
             const svg = document.getElementById('characterSVG');
             
-            // Цвета
-            const skinColor = '#FFE0C0';
-            const hairColor = character.hairColor;
-            const eyeColor = character.eyeColor;
-            
             let svgContent = `
-                <!-- Чиби-персонаж в стиле BLESS -->
-                <defs>
-                    <filter id="glow">
-                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                        <feMerge>
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                    </filter>
+                <svg viewBox="0 0 300 450">
+                    <!-- Тело -->
+                    <ellipse cx="150" cy="320" rx="50" ry="60" fill="${getOutfitColor()}" />
                     
-                    <!-- Градиенты для милоты -->
-                    <radialGradient id="skinGradient">
-                        <stop offset="0%" stop-color="${skinColor}"/>
-                        <stop offset="100%" stop-color="#FFD0A0"/>
-                    </radialGradient>
+                    <!-- Голова -->
+                    <circle cx="150" cy="180" r="85" fill="#FFE0C0" stroke="white" stroke-width="3"/>
                     
-                    <radialGradient id="cheekGradient">
-                        <stop offset="0%" stop-color="#FFB6C1" stop-opacity="0.5"/>
-                        <stop offset="100%" stop-color="#FFB6C1" stop-opacity="0"/>
-                    </radialGradient>
-                </defs>
-            `;
-            
-            // Эффекты (фон)
-            if (character.effect !== 'none') {
-                svgContent += getEffect(character.effect);
-            }
-            
-            // Тело чиби (большая голова, маленькое тело)
-            svgContent += `
-                <!-- Тело -->
-                <ellipse cx="150" cy="320" rx="50" ry="60" fill="${getOutfitColor()}" filter="url(#glow)"/>
-                
-                <!-- Голова (большая) -->
-                <circle cx="150" cy="180" r="90" fill="url(#skinGradient)" stroke="white" stroke-width="4"/>
-                
-                <!-- Уши (для милоты) -->
-                <circle cx="80" cy="150" r="15" fill="url(#skinGradient)" stroke="white" stroke-width="2"/>
-                <circle cx="220" cy="150" r="15" fill="url(#skinGradient)" stroke="white" stroke-width="2"/>
-                
-                <!-- Румянец на щечках -->
-                <circle cx="110" cy="210" r="20" fill="url(#cheekGradient)"/>
-                <circle cx="190" cy="210" r="20" fill="url(#cheekGradient)"/>
+                    <!-- Ушки -->
+                    <circle cx="80" cy="155" r="15" fill="#FFE0C0" stroke="white" stroke-width="2"/>
+                    <circle cx="220" cy="155" r="15" fill="#FFE0C0" stroke="white" stroke-width="2"/>
+                    
+                    <!-- Румянец -->
+                    <circle cx="110" cy="210" r="18" fill="#FFB6C1" opacity="0.4"/>
+                    <circle cx="190" cy="210" r="18" fill="#FFB6C1" opacity="0.4"/>
             `;
             
             // Волосы
-            svgContent += getHairstyle(character.hairstyle, hairColor);
+            svgContent += getHairstyle();
             
-            // Глаза (большие, аниме-стиль)
-            svgContent += getEyes(character.face, eyeColor);
+            // Глаза
+            svgContent += getEyes();
             
-            // Рот и выражение лица
-            svgContent += getMouth(character.face);
+            // Рот
+            svgContent += getMouth();
             
-            // Одежда/наряд
-            svgContent += getOutfit(character.outfit);
-            
-            // Оружие/аксессуар в руке
-            svgContent += getWeapon(character.weapon);
-            
-            // Головной убор
-            if (character.hat !== 'none') {
-                svgContent += getHat(character.hat);
-            }
-            
-            // Брови (милые)
+            // Брови
             svgContent += `
-                <!-- Брови -->
                 <path d="M100,160 L130,150" stroke="#8B4513" stroke-width="4" fill="none" stroke-linecap="round"/>
                 <path d="M200,160 L170,150" stroke="#8B4513" stroke-width="4" fill="none" stroke-linecap="round"/>
             `;
             
+            // Наряд
+            svgContent += getOutfit();
+            
+            // Оружие
+            svgContent += getWeapon();
+            
+            // Головной убор
+            svgContent += getHat();
+            
+            // Эффекты
+            svgContent += getEffect();
+            
+            svgContent += `</svg>`;
+            
             svg.innerHTML = svgContent;
         }
         
-        // Функции для отрисовки разных частей
-        function getHairstyle(style, color) {
-            switch(style) {
+        function getHairstyle() {
+            const color = character.hairColor;
+            switch(character.hairstyle) {
                 case 'long':
-                    return `<path d="M90,100 Q150,150 210,100" fill="${color}" opacity="0.9"/>
-                            <path d="M100,120 L150,250 L200,120" fill="${color}" opacity="0.8"/>`;
+                    return `<path d="M90,100 Q150,160 210,100" fill="${color}" opacity="0.9"/>
+                            <path d="M100,120 L150,260 L200,120" fill="${color}" opacity="0.8"/>`;
                 case 'twintails':
                     return `<circle cx="100" cy="120" r="30" fill="${color}"/>
                             <circle cx="200" cy="120" r="30" fill="${color}"/>`;
@@ -590,60 +651,49 @@
             }
         }
         
-        function getEyes(face, color) {
-            const baseEyes = `
-                <!-- Большие глаза -->
-                <ellipse cx="110" cy="190" rx="20" ry="25" fill="white" stroke="#8B4513" stroke-width="2"/>
-                <ellipse cx="190" cy="190" rx="20" ry="25" fill="white" stroke="#8B4513" stroke-width="2"/>
-                
-                <!-- Зрачки -->
-                <circle cx="110" cy="195" r="12" fill="${color}"/>
-                <circle cx="190" cy="195" r="12" fill="${color}"/>
-                
-                <!-- Блики -->
-                <circle cx="100" cy="185" r="4" fill="white"/>
-                <circle cx="180" cy="185" r="4" fill="white"/>
-            `;
-            
-            switch(face) {
-                case 'wink':
-                    return baseEyes.replace('190', '185').replace('190', '185') + 
-                           `<path d="M190,190 L210,180" stroke="black" stroke-width="3"/>`;
-                case 'heart':
-                    return baseEyes + `
-                        <text x="140" y="140" font-size="30" fill="#ff69b4">❤️</text>
-                    `;
-                case 'star':
-                    return baseEyes + `
-                        <text x="140" y="140" font-size="30" fill="#FFD700">✨</text>
-                    `;
-                default:
-                    return baseEyes;
+        function getEyes() {
+            const color = character.eyeColor;
+            if (character.face === 'wink') {
+                return `
+                    <ellipse cx="110" cy="195" rx="18" ry="22" fill="white" stroke="#8B4513" stroke-width="2"/>
+                    <ellipse cx="190" cy="195" rx="18" ry="22" fill="white" stroke="#8B4513" stroke-width="2"/>
+                    <circle cx="110" cy="200" r="10" fill="${color}"/>
+                    <circle cx="100" cy="190" r="3" fill="white"/>
+                    <line x1="180" y1="190" x2="200" y2="180" stroke="black" stroke-width="3"/>
+                `;
+            } else {
+                return `
+                    <ellipse cx="110" cy="195" rx="18" ry="22" fill="white" stroke="#8B4513" stroke-width="2"/>
+                    <ellipse cx="190" cy="195" rx="18" ry="22" fill="white" stroke="#8B4513" stroke-width="2"/>
+                    <circle cx="110" cy="200" r="10" fill="${color}"/>
+                    <circle cx="190" cy="200" r="10" fill="${color}"/>
+                    <circle cx="100" cy="190" r="3" fill="white"/>
+                    <circle cx="180" cy="190" r="3" fill="white"/>
+                `;
             }
         }
         
-        function getMouth(face) {
-            switch(face) {
+        function getMouth() {
+            switch(character.face) {
                 case 'happy':
                     return `<path d="M130,240 Q150,260 170,240" stroke="black" stroke-width="4" fill="none" stroke-linecap="round"/>`;
-                case 'wink':
-                    return `<path d="M130,240 Q150,255 170,240" stroke="black" stroke-width="4" fill="none"/>`;
+                case 'heart':
+                    return `<text x="140" y="240" font-size="30">❤️</text>`;
+                case 'star':
+                    return `<text x="140" y="240" font-size="30">✨</text>`;
                 default:
                     return `<path d="M130,240 Q150,250 170,240" stroke="black" stroke-width="4" fill="none"/>`;
             }
         }
         
-        function getOutfit(type) {
-            switch(type) {
+        function getOutfit() {
+            switch(character.outfit) {
                 case 'princess':
-                    return `<rect x="120" y="280" width="60" height="80" fill="#FFB6C1" rx="20"/>
-                            <circle cx="150" cy="300" r="15" fill="#FF69B4"/>`;
+                    return `<rect x="120" y="280" width="60" height="80" fill="#FFB6C1" rx="20"/>`;
                 case 'magic':
-                    return `<rect x="120" y="280" width="60" height="80" fill="#9370DB" rx="20"/>
-                            <path d="M150,280 L170,260 L150,300" fill="#FFD700"/>`;
+                    return `<rect x="120" y="280" width="60" height="80" fill="#9370DB" rx="20"/>`;
                 case 'armor':
-                    return `<rect x="120" y="280" width="60" height="80" fill="#C0C0C0" rx="10"/>
-                            <rect x="130" y="290" width="40" height="20" fill="#FFD700"/>`;
+                    return `<rect x="120" y="280" width="60" height="80" fill="#C0C0C0" rx="10"/>`;
                 default:
                     return `<rect x="120" y="280" width="60" height="80" fill="#98FB98" rx="20"/>`;
             }
@@ -658,62 +708,58 @@
             }
         }
         
-        function getWeapon(type) {
-            switch(type) {
+        function getWeapon() {
+            switch(character.weapon) {
                 case 'wand':
                     return `<line x1="230" y1="200" x2="260" y2="150" stroke="#FFD700" stroke-width="5"/>
-                            <circle cx="265" cy="145" r="10" fill="#FF69B4"/>`;
+                            <circle cx="265" cy="145" r="8" fill="#FF69B4"/>`;
                 case 'staff':
-                    return `<rect x="230" y="180" width="8" height="100" fill="#8B4513"/>
-                            <circle cx="234" cy="170" r="15" fill="#9370DB"/>`;
+                    return `<rect x="230" y="180" width="6" height="80" fill="#8B4513"/>
+                            <circle cx="233" cy="170" r="12" fill="#9370DB"/>`;
                 case 'bow':
                     return `<path d="M220,200 Q240,220 220,240" stroke="#8B4513" stroke-width="5" fill="none"/>`;
                 case 'sword':
-                    return `<rect x="230" y="190" width="6" height="80" fill="#C0C0C0"/>
-                            <polygon points="230,170 236,170 233,150" fill="#C0C0C0"/>`;
+                    return `<rect x="230" y="190" width="5" height="70" fill="#C0C0C0"/>
+                            <polygon points="230,170 235,170 232.5,150" fill="#C0C0C0"/>`;
                 case 'heart':
-                    return `<text x="230" y="200" font-size="40">💖</text>`;
+                    return `<text x="230" y="200" font-size="35">💖</text>`;
                 default:
                     return '';
             }
         }
         
-        function getHat(type) {
-            switch(type) {
+        function getHat() {
+            switch(character.hat) {
                 case 'crown':
-                    return `<path d="M120,60 L150,30 L180,60" stroke="#FFD700" stroke-width="6" fill="none"/>
-                            <circle cx="150" cy="35" r="8" fill="#FFD700"/>`;
+                    return `<path d="M120,60 L150,30 L180,60" stroke="#FFD700" stroke-width="5" fill="none"/>
+                            <circle cx="150" cy="35" r="6" fill="#FFD700"/>`;
                 case 'ribbon':
-                    return `<rect x="130" y="70" width="40" height="15" fill="#FF69B4" rx="7"/>
-                            <rect x="140" y="60" width="20" height="20" fill="#FF69B4" rx="5"/>`;
+                    return `<rect x="130" y="70" width="40" height="12" fill="#FF69B4" rx="6"/>
+                            <rect x="140" y="60" width="20" height="15" fill="#FF69B4" rx="5"/>`;
                 case 'witchhat':
-                    return `<polygon points="120,70 180,70 150,30" fill="#2C2C2C"/>
-                            <circle cx="150" cy="35" r="8" fill="#9370DB"/>`;
+                    return `<polygon points="120,70 180,70 150,30" fill="#2C2C2C"/>`;
                 case 'flowers':
                     return `<circle cx="130" cy="65" r="8" fill="#FF69B4"/>
-                            <circle cx="170" cy="65" r="8" fill="#FFD700"/>
-                            <circle cx="150" cy="50" r="8" fill="#98FB98"/>`;
+                            <circle cx="170" cy="65" r="8" fill="#FFD700"/>`;
                 default:
                     return '';
             }
         }
         
-        function getEffect(type) {
-            switch(type) {
+        function getEffect() {
+            switch(character.effect) {
                 case 'sparkles':
-                    return `<text x="50" y="100" font-size="30">✨</text>
-                            <text x="250" y="100" font-size="30">✨</text>
-                            <text x="150" y="50" font-size="30">✨</text>`;
+                    return `<text x="30" y="100" font-size="25">✨</text>
+                            <text x="250" y="100" font-size="25">✨</text>`;
                 case 'hearts':
-                    return `<text x="40" y="150" font-size="30">💖</text>
-                            <text x="260" y="150" font-size="30">💖</text>
-                            <text x="150" y="400" font-size="30">💖</text>`;
+                    return `<text x="30" y="150" font-size="25">💖</text>
+                            <text x="250" y="150" font-size="25">💖</text>`;
                 case 'stars':
-                    return `<text x="30" y="200" font-size="30">⭐</text>
-                            <text x="270" y="200" font-size="30">⭐</text>`;
+                    return `<text x="30" y="200" font-size="25">⭐</text>
+                            <text x="250" y="200" font-size="25">⭐</text>`;
                 case 'flowers':
-                    return `<text x="20" y="250" font-size="30">🌸</text>
-                            <text x="280" y="250" font-size="30">🌸</text>`;
+                    return `<text x="30" y="250" font-size="25">🌸</text>
+                            <text x="250" y="250" font-size="25">🌸</text>`;
                 default:
                     return '';
             }
@@ -731,135 +777,127 @@
             document.getElementById('characterName').textContent = names[character.role] || '✨ Героиня ✨';
         }
         
-        // Обновление всего UI
-        function updateUI() {
+        // Обновление всего персонажа
+        function updateCharacter() {
             drawCharacter();
             updateName();
         }
         
-        // Инициализация цветовых палитр
-        function initColorPalettes() {
-            const hairPalette = document.getElementById('hairColorPalette');
-            const eyePalette = document.getElementById('eyeColorPalette');
-            
-            hairColors.forEach(color => {
-                const btn = document.createElement('button');
-                btn.className = `color-btn ${character.hairColor === color ? 'selected' : ''}`;
-                btn.style.backgroundColor = color;
-                btn.onclick = () => {
-                    document.querySelectorAll('#hairColorPalette .color-btn').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    character.hairColor = color;
-                    updateUI();
-                };
-                hairPalette.appendChild(btn);
-            });
-            
-            eyeColors.forEach(color => {
-                const btn = document.createElement('button');
-                btn.className = `color-btn ${character.eyeColor === color ? 'selected' : ''}`;
-                btn.style.backgroundColor = color;
-                btn.onclick = () => {
-                    document.querySelectorAll('#eyeColorPalette .color-btn').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    character.eyeColor = color;
-                    updateUI();
-                };
-                eyePalette.appendChild(btn);
-            });
-        }
+        // Кнопки выбора пола
+        document.getElementById('genderFemale').onclick = () => {
+            document.getElementById('genderFemale').classList.add('selected');
+            document.getElementById('genderMale').classList.remove('selected');
+            character.gender = 'female';
+            updateCharacter();
+        };
         
-        // Настройка обработчиков кнопок
-        function setupButtons() {
-            // Роли
-            document.querySelectorAll('[data-role]').forEach(btn => {
-                btn.onclick = () => {
-                    document.querySelectorAll('[data-role]').forEach(b => b.classList.remove('selected'));
+        document.getElementById('genderMale').onclick = () => {
+            document.getElementById('genderMale').classList.add('selected');
+            document.getElementById('genderFemale').classList.remove('selected');
+            character.gender = 'male';
+            updateCharacter();
+        };
+        
+        // Случайный персонаж
+        document.getElementById('randomizeBtn').onclick = () => {
+            const roles = ['princess', 'mage', 'warrior', 'hunter', 'angel'];
+            const hairstyles = ['long', 'twintails', 'short', 'braid', 'bob'];
+            const faces = ['happy', 'wink', 'heart', 'star'];
+            const weapons = ['wand', 'staff', 'bow', 'sword', 'heart'];
+            const outfits = ['princess', 'magic', 'armor'];
+            const hats = ['none', 'crown', 'ribbon', 'witchhat', 'flowers'];
+            const effects = ['none', 'sparkles', 'hearts', 'stars', 'flowers'];
+            
+            character.role = roles[Math.floor(Math.random() * roles.length)];
+            character.hairstyle = hairstyles[Math.floor(Math.random() * hairstyles.length)];
+            character.hairColor = hairColors[Math.floor(Math.random() * hairColors.length)];
+            character.eyeColor = eyeColors[Math.floor(Math.random() * eyeColors.length)];
+            character.face = faces[Math.floor(Math.random() * faces.length)];
+            character.weapon = weapons[Math.floor(Math.random() * weapons.length)];
+            character.outfit = outfits[Math.floor(Math.random() * outfits.length)];
+            character.hat = hats[Math.floor(Math.random() * hats.length)];
+            character.effect = effects[Math.floor(Math.random() * effects.length)];
+            
+            // Обновляем выделение кнопок
+            document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelectorAll(`[data-role="${character.role}"]`).forEach(btn => btn.classList.add('selected'));
+            document.querySelectorAll(`[data-hairstyle="${character.hairstyle}"]`).forEach(btn => btn.classList.add('selected'));
+            document.querySelectorAll(`[data-face="${character.face}"]`).forEach(btn => btn.classList.add('selected'));
+            document.querySelectorAll(`[data-weapon="${character.weapon}"]`).forEach(btn => btn.classList.add('selected'));
+            document.querySelectorAll(`[data-outfit="${character.outfit}"]`).forEach(btn => btn.classList.add('selected'));
+            document.querySelectorAll(`[data-hat="${character.hat}"]`).forEach(btn => btn.classList.add('selected'));
+            document.querySelectorAll(`[data-effect="${character.effect}"]`).forEach(btn => btn.classList.add('selected'));
+            
+            // Обновляем цветовые палитры
+            document.querySelectorAll('#hairColorPalette .color-btn').forEach(btn => {
+                if (btn.style.backgroundColor === character.hairColor) {
                     btn.classList.add('selected');
-                    character.role = btn.dataset.role;
-                    updateUI();
-                };
+                } else {
+                    btn.classList.remove('selected');
+                }
             });
             
-            // Прически
-            document.querySelectorAll('[data-hairstyle]').forEach(btn => {
-                btn.onclick = () => {
-                    document.querySelectorAll('[data-hairstyle]').forEach(b => b.classList.remove('selected'));
+            document.querySelectorAll('#eyeColorPalette .color-btn').forEach(btn => {
+                if (btn.style.backgroundColor === character.eyeColor) {
                     btn.classList.add('selected');
-                    character.hairstyle = btn.dataset.hairstyle;
-                    updateUI();
-                };
+                } else {
+                    btn.classList.remove('selected');
+                }
             });
             
-            // Выражение лица
-            document.querySelectorAll('[data-face]').forEach(btn => {
-                btn.onclick = () => {
-                    document.querySelectorAll('[data-face]').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    character.face = btn.dataset.face;
-                    updateUI();
-                };
-            });
-            
-            // Оружие
-            document.querySelectorAll('[data-weapon]').forEach(btn => {
-                btn.onclick = () => {
-                    document.querySelectorAll('[data-weapon]').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    character.weapon = btn.dataset.weapon;
-                    updateUI();
-                };
-            });
-            
-            // Наряд
-            document.querySelectorAll('[data-outfit]').forEach(btn => {
-                btn.onclick = () => {
-                    document.querySelectorAll('[data-outfit]').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    character.outfit = btn.dataset.outfit;
-                    updateUI();
-                };
-            });
-            
-            // Головной убор
-            document.querySelectorAll('[data-hat]').forEach(btn => {
-                btn.onclick = () => {
-                    document.querySelectorAll('[data-hat]').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    character.hat = btn.dataset.hat;
-                    updateUI();
-                };
-            });
-            
-            // Эффекты
-            document.querySelectorAll('[data-effect]').forEach(btn => {
-                btn.onclick = () => {
-                    document.querySelectorAll('[data-effect]').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    character.effect = btn.dataset.effect;
-                    updateUI();
-                };
-            });
-            
-            // Пол
-            document.getElementById('genderFemale').onclick = () => {
-                document.getElementById('genderFemale').classList.add('selected');
-                document.getElementById('genderMale').classList.remove('selected');
-                character.gender = 'female';
-                updateUI();
+            updateCharacter();
+        };
+        
+        // Сброс
+        document.getElementById('resetBtn').onclick = () => {
+            character = {
+                gender: 'female',
+                role: 'princess',
+                hairstyle: 'long',
+                hairColor: '#F4C430',
+                eyeColor: '#4a90e2',
+                face: 'happy',
+                weapon: 'wand',
+                outfit: 'princess',
+                hat: 'none',
+                effect: 'none'
             };
             
-            document.getElementById('genderMale').onclick = () => {
-                document.getElementById('genderMale').classList.add('selected');
-                document.getElementById('genderFemale').classList.remove('selected');
-                character.gender = 'male';
-                updateUI();
-            };
+            // Обновляем выделение кнопок
+            document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelectorAll('[data-role="princess"]').forEach(btn => btn.classList.add('selected'));
+            document.querySelectorAll('[data-hairstyle="long"]').forEach(btn => btn.classList.add('selected'));
+            document.querySelectorAll('[data-face="happy"]').forEach(btn => btn.classList.add('selected'));
+            document.querySelectorAll('[data-weapon="wand"]').forEach(btn => btn.classList.add('selected'));
+            document.querySelectorAll('[data-outfit="princess"]').forEach(btn => btn.classList.add('selected'));
+            document.querySelectorAll('[data-hat="none"]').forEach(btn => btn.classList.add('selected'));
+            document.querySelectorAll('[data-effect="none"]').forEach(btn => btn.classList.add('selected'));
             
-            // Случайный персонаж
-            document.getElementById('randomizeBtn').onclick = () => {
-                const roles = ['princess', 'mage', 'warrior', 'hunter', 'angel'];
-                const hairstyles = ['long', 'twintails', 'short', 'braid', 'bob'];
-                const faces = ['happy', 'wink', 'heart', 'star'];
-                const weapons = ['wand', 'staff', 'bow', 'sword', 'heart'];
-                const outfits = ['princess', 'magic', 'arm
+            // Обновляем цветовые палитры
+            document.querySelectorAll('#hairColorPalette .color-btn').forEach(btn => {
+                if (btn.style.backgroundColor === '#F4C430') {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            
+            document.querySelectorAll('#eyeColorPalette .color-btn').forEach(btn => {
+                if (btn.style.backgroundColor === '#4a90e2') {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            
+            document.getElementById('genderFemale').click();
+            updateCharacter();
+        };
+        
+        // Инициализация
+        createButtons();
+        createColorPalettes();
+        updateCharacter();
+    </script>
+</body>
+</html>
