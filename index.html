@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ Визуальный конструктор персонажей</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #a8b2d1;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        
+        .gender-selector {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .gender-btn {
+            padding: 15px 40px;
+            font-size: 1.3em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 2px solid transparent;
+        }
+        
+        .gender-btn.female {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        }
+        
+        .gender-btn.male {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+        }
+        
+        .gender-btn.selected {
+            transform: scale(1.1);
+            border-color: white;
+            box-shadow: 0 0 30px currentColor;
+        }
+        
+        .main-area {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            gap: 20px;
+        }
+        
+        @media (max-width: 1200px) {
+            .main-area {
+                grid-template-columns: 250px 1fr 250px;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .main-area {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Панели */
+        .panel {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+        }
+        
+        .panel h2 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+        }
+        
+        /* Центральная область с персонажем */
+        .character-display {
+            background: linear-gradient(135deg, #2a2a4a, #1a1a3a);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 600px;
+            position: relative;
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        
+        .character-canvas {
+            width: 100%;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .character-svg {
+            max-width: 100%;
+            max-height: 100%;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+        }
+        
+        .character-name {
+            font-size: 2em;
+            margin-top: 20px;
+            color: white;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            background: rgba(0,0,0,0.3);
+            padding: 10px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        /* Кнопки выбора */
+        .option-group {
+            margin-bottom: 25px;
+        }
+        
+        .option-group h3 {
+            margin-bottom: 10px;
+            color: #a8b2d1;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .option-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .option-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+        
+        .option-btn:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .option-btn.selected {
+            background: #4a90e2;
+            border-color: white;
+            box-shadow: 0 0 15px #4a90e2;
+        }
+        
+        /* Цветовая палитра */
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .color-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .color-btn:hover {
+            transform: scale(1.1);
+            border-color: white;
+        }
+        
+        .color-btn.selected {
+            border-color: white;
+            box-shadow: 0 0 15px currentColor;
+        }
+        
+        /* Кнопки действий */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(74,144,226,0.4);
+        }
+        
+        .action-btn.secondary {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        }
+        
+        .stats-panel {
+            margin-top: 20px;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        
+        .stat-label {
+            color: #a8b2d1;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+            color: #4a90e2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚔️ КОНСТРУКТОР ГЕРОЕВ ⚔️</h1>
+        <div class="subtitle">Собери своего идеального персонажа в реальном времени!</div>
+        
+        <!-- Выбор пола -->
+        <div class="gender-selector">
+            <button class="gender-btn female selected" id="genderFemale">👸 Женский</button>
+            <button class="gender-btn male" id="genderMale">👑 Мужской</button>
+        </div>
+        
+        <!-- Основная область -->
+        <div class="main-area">
+            <!-- Левая панель - Внешность -->
+            <div class="panel">
+                <h2>✨ Внешность</h2>
+                
+                <div class="option-group">
+                    <h3>Прическа</h3>
+                    <div class="option-buttons" id="hairstyleButtons"></div>
+                </div>
+                
+                <div class="option-group">
+                    <h3>Цвет волос</h3>
+                    <div class="color-palette" id="hairColorPalette"></div>
+                </div>
+                
+                <div class="option-group">
+                    <h3>Цвет глаз</h3>
+                    <div class="color-palette" id="eyeColorPalette"></div>
+                </div>
+                
+                <div class="option-group">
+                    <h3>Особенности</h3>
+                    <div class="option-buttons" id="featuresButtons"></div>
+                </div>
+            </div>
+            
+            <!-- Центральная область - Персонаж -->
+            <div class="character-display">
+                <div class="character-canvas">
+                    <svg class="character-svg" viewBox="0 0 400 500" id="characterSVG">
+                        <!-- Здесь будет отрисовываться персонаж -->
+                    </svg>
+                </div>
+                <div class="character-name" id="characterName">Новый герой</div>
+            </div>
+            
+            <!-- Правая панель - Снаряжение и характеристики -->
+            <div class="panel">
+                <h2>⚔️ Снаряжение</h2>
+                
+                <div class="option-group">
+                    <h3>Класс</h3>
+                    <div class="option-buttons" id="classButtons"></div>
+                </div>
+                
+                <div class="option-group">
+                    <h3>Оружие</h3>
+                    <div class="option-buttons" id="weaponButtons"></div>
+                </div>
+                
+                <div class="option-group">
+                    <h3>Доспехи</h3>
+                    <div class="option-buttons" id="armorButtons"></div>
+                </div>
+                
+                <div class="option-group">
+                    <h3>Аксессуары</h3>
+                    <div class="option-buttons" id="accessoryButtons"></div>
+                </div>
+                
+                <!-- Характеристики -->
+                <div class="stats-panel">
+                    <h3>📊 Характеристики</h3>
+                    <div class="stat-item">
+                        <span class="stat-label">Сила</span>
+                        <span class="stat-value" id="statStr">10</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Ловкость</span>
+                        <span class="stat-value" id="statDex">10</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Интеллект</span>
+                        <span class="stat-value" id="statInt">10</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Магия</span>
+                        <span class="stat-value" id="statMag">10</span>
+                    </div>
+                </div>
+                
+                <!-- Кнопки действий -->
+                <div class="action-buttons">
+                    <button class="action-btn" id="randomizeBtn">🎲 Случайный</button>
+                    <button class="action-btn secondary" id="resetBtn">🔄 Сброс</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Состояние персонажа
+        const character = {
+            gender: 'female',
+            hairstyle: 'long',
+            hairColor: '#8B4513',
+            eyeColor: '#4a90e2',
+            features: 'none',
+            class: 'warrior',
+            weapon: 'sword',
+            armor: 'leather',
+            accessory: 'none'
+        };
+        
+        // База данных опций
+        const options = {
+            hairstyles: {
+                female: [
+                    { id: 'long', name: 'Длинные', svg: 'M150,120 L160,180 L200,190 L240,180 L250,120' },
+                    { id: 'medium', name: 'Средние', svg: 'M160,120 L170,160 L200,165 L230,160 L240,120' },
+                    { id: 'short', name: 'Короткие', svg: 'M170,120 L180,140 L200,145 L220,140 L230,120' },
+                    { id: 'ponytail', name: 'Хвост', svg: 'M150,120 L200,180 L250,120' }
+                ],
+                male: [
+                    { id: 'short', name: 'Короткие', svg: 'M170,120 L200,130 L230,120' },
+                    { id: 'medium', name: 'Средние', svg: 'M160,120 L200,140 L240,120' },
+                    { id: 'long', name: 'Длинные', svg: 'M150,120 L200,160 L250,120' },
+                    { id: 'bald', name: 'Лысый', svg: 'M180,120 L200,125 L220,120' }
+                ]
+            },
+            hairColors: [
+                { name: 'Черный', value: '#2C2C2C' },
+                { name: 'Каштановый', value: '#8B4513' },
+                { name: 'Русый', value: '#D2B48C' },
+                { name: 'Блондин', value: '#F4C430' },
+                { name: 'Рыжий', value: '#D2691E' },
+                { name: 'Седой', value: '#C0C0C0' },
+                { name: 'Фиолетовый', value: '#8A2BE2' },
+                { name: 'Синий', value: '#4169E1' }
+            ],
+            eyeColors: [
+                { name: 'Голубые', value: '#4a90e2' },
+                { name: 'Зеленые', value: '#32CD32' },
+                { name: 'Карие', value: '#8B4513' },
+                { name: 'Серые', value: '#708090' },
+                { name: 'Фиолетовые', value: '#9370DB' },
+                { name: 'Красные', value: '#DC143C' }
+            ],
+            features: [
+                { id: 'none', name: 'Нет', stat: { int: 0 } },
+                { id: 'scar', name: 'Шрам', stat: { str: 2 } },
+                { id: 'tattoo', name: 'Тату', stat: { dex: 2 } },
+                { id: 'glasses', name: 'Очки', stat: { int: 2 } }
+            ],
+            classes: [
+                { id: 'warrior', name: 'Воин', stats: { str: 15, dex: 10, int: 5, mag: 5 } },
+                { id: 'rogue', name: 'Разбойник', stats: { str: 8, dex: 15, int: 10, mag: 5 } },
+                { id: 'mage', name: 'Маг', stats: { str: 5, dex: 8, int: 15, mag: 15 } },
+                { id: 'paladin', name: 'Паладин', stats: { str: 12, dex: 8, int: 10, mag: 10 } },
+                { id: 'hunter', name: 'Охотник', stats: { str: 10, dex: 13, int: 8, mag: 5 } }
+            ],
+            weapons: [
+                { id: 'sword', name: 'Меч', stat: { str: 3 } },
+                { id: 'axe', name: 'Топор', stat: { str: 4, dex: -1 } },
+                { id: 'bow', name: 'Лук', stat: { dex: 3 } },
+                { id: 'staff', name: 'Посох', stat: { mag: 3 } },
+                { id: 'dagger', name: 'Кинжал', stat: { dex: 2, str: 1 } }
+            ],
+            armors: [
+                { id: 'cloth', name: 'Ткань', stat: { int: 2 } },
+                { id: 'leather', name: 'Кожа', stat: { dex: 2 } },
+                { id: 'chain', name: 'Кольчуга', stat: { str: 2 } },
+                { id: 'plate', name: 'Латы', stat: { str: 3, dex: -1 } },
+                { id: 'robe', name: 'Мантия', stat: { mag: 2 } }
+            ],
+            accessories: [
+                { id: 'none', name: 'Нет', stat: {} },
+                { id: 'necklace', name: 'Кулон', stat: { mag: 1, int: 1 } },
+                { id: 'ring', name: 'Кольцо', stat: { all: 1 } },
+                { id: 'cape', name: 'Плащ', stat: { dex: 1, str: 1 } },
+                { id: 'crown', name: 'Корона', stat: { all: 2 } }
+            ]
+        };
+        
+        // Функция отрисовки персонажа
+        function drawCharacter() {
+            const svg = document.getElementById('characterSVG');
+            const gender = character.gender;
+            
+            // Базовая фигура человека
+            let svgContent = `
+                <!-- Тени и подсветки -->
+                <defs>
+                    <linearGradient id="skinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#FFDBB5"/>
+                        <stop offset="100%" stop-color="#F0C8A0"/>
+                    </linearGradient>
+                    
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <!-- Шея -->
+                <rect x="180" y="150" width="40" height="60" fill="url(#skinGradient)" rx="15"/>
+                
+                <!-- Тело -->
+                <rect x="150" y="200" width="100" height="180" fill="${character.armor === 'plate' ? '#C0C0C0' : character.armor === 'chain' ? '#888888' : character.armor === 'leather' ? '#8B4513' : '#4a4a4a'}" rx="20"/>
+                
+                <!-- Голова -->
+                <circle cx="200" cy="120" r="45" fill="url(#skinGradient)" filter="url(#glow)"/>
+            `;
+            
+            // Волосы в зависимости от пола и прически
+            if (character.gender === 'female') {
+                if (character.hairstyle === 'long') {
+                    svgContent += `
+                        <path d="M165,100 Q200,150 235,100" fill="${character.hairColor}" opacity="0.8"/>
+                        <path d="M160,120 L200,200 L240,120" fill="${character.hairColor}" opacity="0.6"/>
+                    `;
+                } else if (character.hairstyle === 'ponytail') {
+                    svgContent += `
+                        <path d="M180,80 L200,150 L220,80" fill="${character.hairColor}"/>
+                        <circle cx="200" cy="160" r="20" fill="${character.hairColor}"/>
+                    `;
+                } else {
+                    svgContent += `<path d="M165,90 Q200,120 235,90" fill="${character.hairColor}"/>`;
+                }
+            } else {
+                // Мужские прически
+                if (character.hairstyle === 'short') {
+                    svgContent += `<rect x="165" y="75" width="70" height="25" fill="${character.hairColor}" rx="12"/>`;
+                } else if (character.hairstyle === 'long') {
+                    svgContent += `<path d="M165,80 Q200,130 235,80" fill="${character.hairColor}"/>`;
+                } else if (character.hairstyle === 'bald') {
+                    // Лысина - ничего не добавляем
+                }
+            }
+            
+            // Глаза
+            const eyeColor = character.eyeColor;
+            svgContent += `
+                <!-- Глаза -->
+                <circle cx="175" cy="115" r="8" fill="white"/>
+                <circle cx="225" cy="115" r="8" fill="white"/>
+                <circle cx="179" cy="118" r="4" fill="${eyeColor}"/>
+                <circle cx="229" cy="118" r="4" fill="${eyeColor}"/>
+                <circle cx="181" cy="120" r="2" fill="black"/>
+                <circle cx="231" cy="120" r="2" fill="black"/>
+            `;
+            
+            // Оружие
+            if (character.weapon === 'sword') {
+                svgContent += `
+                    <rect x="260" y="200" width="10" height="120" fill="#C0C0C0"/>
+                    <rect x="255" y="180" width="20" height="30" fill="#FFD700"/>
+                `;
+            } else if (character.weapon === 'staff') {
+                svgContent += `
+                    <rect x="260" y="150" width="8" height="150" fill="#8B4513"/>
+                    <circle cx="264" cy="140" r="15" fill="#4a90e2" opacity="0.5"/>
+                `;
+            } else if (character.weapon === 'bow') {
+                svgContent += `
+                    <path d="M260,200 Q280,250 260,300" stroke="#8B4513" stroke-width="5" fill="none"/>
+                `;
+            }
+            
+            // Особенности
+            if (character.features === 'scar') {
+                svgContent += `<path d="M190,130 L210,140" stroke="#8B0000" stroke-width="3" fill="none"/>`;
+            } else if (character.features === 'glasses') {
+                svgContent += `
+                    <circle cx="175" cy="115" r="12" fill="none" stroke="black" stroke-width="2"/>
+                    <circle cx="225" cy="115" r="12" fill="none" stroke="black" stroke-width="2"/>
+                    <line x1="187" y1="115" x2="213" y2="115" stroke="black" stroke-width="2"/>
+                `;
+            }
+            
+            // Аксессуары
+            if (character.accessory === 'crown') {
+                svgContent += `
+                    <path d="M170,60 L200,30 L230,60" stroke="#FFD700" stroke-width="4" fill="none"/>
+                    <circle cx="200" cy="35" r="5" fill="#FFD700"/>
+                `;
+            } else if (character.accessory === 'cape') {
+                svgContent += `
+                    <path d="M130,200 Q100,300 130,400" fill="#8B0000" opacity="0.6"/>
+                `;
+            }
+            
+            svg.innerHTML = svgContent;
+        }
+        
+        // Функция обновления характеристик
+        function updateStats() {
+            const baseStats = options.classes.find(c => c.id === character.class).stats;
+            let str = baseStats.str;
+            let dex = baseStats.dex;
+            let int = baseStats.int;
+            let mag = baseStats.mag;
+            
+            // Добавляем бонусы от оружия
+            const weaponBonus = options.weapons.find(w => w.id === character.weapon).stat;
+            str += weaponBonus.str || 0;
+            dex += weaponBonus.dex || 0;
+            int += weaponBonus.int || 0;
+            mag += weaponBonus.mag || 0;
+            
+            // Бонусы от брони
+            const armorBonus = options.armors.find(a => a.id === character.armor).stat;
+            str += armorBonus.str || 0;
+            dex += armorBonus.dex || 0;
+            int += armorBonus.int || 0;
+            mag += armorBonus.mag || 0;
+            
+            // Бонусы от аксессуаров
+            const accessoryBonus = options.accessories.find(a => a.id === character.accessory).stat;
+            if (accessoryBonus.all) {
+                str += accessoryBonus.all;
+                dex += accessoryBonus.all;
+                int += accessoryBonus.all;
+                mag += accessoryBonus.all;
+            } else {
+                str += accessoryBonus.str || 0;
+                dex += accessoryBonus.dex || 0;
+                int += accessoryBonus.int || 0;
+                mag += accessoryBonus.mag || 0;
+            }
+            
+            document.getElementById('statStr').textContent = Math.max(1, str);
+            document.getElementById('statDex').textContent = Math.max(1, dex);
+            document.getElementById('statInt').textContent = Math.max(1, int);
+            document.getElementById('statMag').textContent = Math.max(1, mag);
+        }
+        
+        // Функция обновления интерфейса
+        function updateUI() {
+            drawCharacter();
+            updateStats();
+            
+            // Обновляем имя персонажа
+            const className = options.classes.find(c => c.id === character.class).name;
+            document.getElementById('characterName').textContent = 
+                `${character.gender === 'female' ? '👸' : '👑'} ${className}`;
+        }
+        
+        // Инициализация кнопок
+        function initializeButtons() {
+            // Прически
+            const hairstyleContainer = document.getElementById('hairstyleButtons');
+            options.hairstyles[character.gender].forEach(style => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.hairstyle === style.id ? 'selected' : ''}`;
+                btn.textContent = style.name;
+                btn.onclick = () => {
+                    character.hairstyle = style.id;
+                    document.querySelectorAll('#hairstyleButtons .option-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    updateUI();
+                };
+                hairstyleContainer.appendChild(btn);
+            });
+            
+            // Цвета волос
+            const hairColorContainer = document.getElementById('hairColorPalette');
+            options.hairColors.forEach(color => {
+                const btn = document.createElement('button');
+                btn.className = `color-btn ${character.hairColor === color.value ? 'selected' : ''}`;
+                btn.style.backgroundColor = color.value;
+                btn.title = color.name;
+                btn.onclick = () => {
+                    character.hairColor = color.value;
+                    document.querySelectorAll('#hairColorPalette .color-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    updateUI();
+                };
+                hairColorContainer.appendChild(btn);
+            });
+            
+            // Цвета глаз
+            const eyeColorContainer = document.getElementById('eyeColorPalette');
+            options.eyeColors.forEach(color => {
+                const btn = document.createElement('button');
+                btn.className = `color-btn ${character.eyeColor === color.value ? 'selected' : ''}`;
+                btn.style.backgroundColor = color.value;
+                btn.title = color.name;
+                btn.onclick = () => {
+                    character.eyeColor = color.value;
+                    document.querySelectorAll('#eyeColorPalette .color-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    updateUI();
+                };
+                eyeColorContainer.appendChild(btn);
+            });
+            
+            // Особенности
+            const featuresContainer = document.getElementById('featuresButtons');
+            options.features.forEach(feature => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.features === feature.id ? 'selected' : ''}`;
+                btn.textContent = feature.name;
+                btn.onclick = () => {
+                    character.features = feature.id;
+                    document.querySelectorAll('#featuresButtons .option-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    updateUI();
+                };
+                featuresContainer.appendChild(btn);
+            });
+            
+            // Классы
+            const classContainer = document.getElementById('classButtons');
+            options.classes.forEach(cls => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.class === cls.id ? 'selected' : ''}`;
+                btn.textContent = cls.name;
+                btn.onclick = () => {
+                    character.class = cls.id;
+                    document.querySelectorAll('#classButtons .option-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    updateUI();
+                };
+                classContainer.appendChild(btn);
+            });
+            
+            // Оружие
+            const weaponContainer = document.getElementById('weaponButtons');
+            options.weapons.forEach(weapon => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.weapon === weapon.id ? 'selected' : ''}`;
+                btn.textContent = weapon.name;
+                btn.onclick = () => {
+                    character.weapon = weapon.id;
+                    document.querySelectorAll('#weaponButtons .option-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    updateUI();
+                };
+                weaponContainer.appendChild(btn);
+            });
+            
+            // Доспехи
+            const armorContainer = document.getElementById('armorButtons');
+            options.armors.forEach(armor => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.armor === armor.id ? 'selected' : ''}`;
+                btn.textContent = armor.name;
+                btn.onclick = () => {
+                    character.armor = armor.id;
+                    document.querySelectorAll('#armorButtons .option-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    updateUI();
+                };
+                armorContainer.appendChild(btn);
+            });
+            
+            // Аксессуары
+            const accessoryContainer = document.getElementById('accessoryButtons');
+            options.accessories.forEach(accessory => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.accessory === accessory.id ? 'selected' : ''}`;
+                btn.textContent = accessory.name;
+                btn.onclick = () => {
+                    character.accessory = accessory.id;
+                    document.querySelectorAll('#accessoryButtons .option-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    updateUI();
+                };
+                accessoryContainer.appendChild(btn);
+            });
+        }
+        
+        // Выбор пола
+        document.getElementById('genderFemale').onclick = () => {
+            character.gender = 'female';
+            document.getElementById('genderFemale').classList.add('selected');
+            document.getElementById('genderMale').classList.remove('selected');
+            // Обновляем прически для женского пола
+            const hairstyleContainer = document.getElementById('hairstyleButtons');
+            hairstyleContainer.innerHTML = '';
+            options.hairstyles.female.forEach(style => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.hairstyle === style.id ? 'selected' : ''}`;
+                btn.textContent = style.name;
+                btn.onclick = () => {
+                    character.hairstyle = style.id;
+                    document.querySelectorAll('#hairstyleButtons .option-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    updateUI();
+                };
+                hairstyleContainer.appendChild(btn);
+            });
+            updateUI();
+        };
+        
+        document.getElementById('genderMale').onclick = () => {
+            character.gender = 'male';
+            document.getElementById('genderMale').classList.add('selected');
+            document.getElementById('genderFemale').classList.remove('selected');
+            // Обновляем прически для мужского пола
+            const hairstyleContainer = document.getElementById('hairstyleButtons');
+            hairstyleContainer.innerHTML = '';
+            options.hairstyles.male.forEach(style => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${character.hairstyle === style.id ? 'selected' : ''}`;
+                btn.textContent = style.name;
+                btn.onclick = () => {
+                    character.hairstyle = style.id;
+                    document.querySelectorAll('#hairstyleButtons .option-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    updateUI();
+                };
+                hairstyleContainer.appendChild(btn);
+            });
+            updateUI();
+        };
+        
+        // Случайный персонаж
+        document.getElementById('randomizeBtn').onclick = () => {
+            const genders = ['female', 'male'];
+            character.gender = genders[Math.floor(Math.random() * genders.length)];
+            
+            if (character.gender === 'female') {
+                document.getElementById('genderFemale').click();
+            } else {
+                document.getElementById('genderMale').click();
+            }
+            
+            character.hairstyle = options.hairstyles[character.gender][Math.floor(Math.random() * options.hairstyles[character.gender].length)].id;
+            character.hairColor = options.hairColors[Math.floor(Math.random() * options.hairColors.length)].value;
+            character.eyeColor = options.eyeColors[Math.floor(Math.random() * options.eyeColors.length)].value;
+            character.features = options.features[Math.floor(Math.random() * options.features.length)].id;
+            character.class = options.classes[Math.floor(Math.random() * options.classes.length)].id;
+            character.weapon = options.weapons[Math.floor(Math.random() * options.weapons.length)].id;
+            character.armor = options.armors[Math.floor(Math.random() * options.armors.length)].id;
+            character.accessory = options.accessories[Math.floor(Math.random() * options.accessories.length)].id;
+            
+            // Обновляем выделение кнопок
+            document.querySelectorAll('.option-btn, .color-btn').forEach(btn => btn.classList.remove('selected'));
+            
+            // Здесь можно добачить логику для выделения соответствующих кнопок
+            
+            updateUI();
+        };
+        
+        // Сброс
+        document.getElementById('resetBtn').onclick = () => {
+            character.gender = 'female';
+            character.hairstyle = 'long';
+            character.hairColor = '#8B4513';
+            character.eyeColor = '#4a90e2';
+            character.features = 'none';
+            character.class = 'warrior';
+            character.weapon = 'sword';
+            character.armor = 'leather';
+            character.accessory = 'none';
+            
+            document.getElementById('genderFemale').click();
+            
+            document.querySelectorAll('.option-btn, .color-btn').forEach(btn => btn.classList.remove('selected'));
+            
+            updateUI();
+        };
+        
+        // Запуск
+        initializeButtons();
+        updateUI();
+    </script>
+</body>
+</html>
